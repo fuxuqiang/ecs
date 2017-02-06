@@ -1,0 +1,1 @@
+<div id="logos-inside"><img src="/img/ecs_logo.gif" alt="ECS"/></div>

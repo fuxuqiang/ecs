@@ -1,0 +1,139 @@
+body, p, td, div {
+  font:12px Arial, Helvetica, sans-serif;
+  line-height:130%;
+  color: #192E32;
+}
+
+html {
+  overflow-y:scroll;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  text-align:center;
+  background: #dce9f1;
+}
+
+body h3 {
+  background:#41a5e1;
+  margin:1px;
+  padding:5px 15px;
+  color: #FFF;
+  text-align: left;
+}
+
+p {
+  font-size:12px;
+  color:#555;
+  text-align:left;
+  margin:0px;
+}
+
+h3 {
+  font-family:Arial, Helvetica, sans-serif;
+  color:#333;
+  margin:15px 0 5px 0;
+  font-size:14px;
+}
+
+input, select {
+  font:12px 宋体, Arial, Helvetica, sans-serif;
+}
+
+#logos {
+  margin:0 auto;
+  background:#41a5e1;
+}
+
+#logos-inside {
+  width:1000px;
+  text-align:left;
+  margin:0 auto;
+}
+
+#lang-menu {
+  margin:0 0 20px 0;
+  background:#f5f5f5;
+  color:#333;
+  border-bottom:1px solid #bbdde5;
+}
+
+#lang-menu-inside {
+  line-height:50px;
+  color:#515151;
+  text-align:right;
+  display: block;
+  padding-right:100px;
+}
+#lang-menu-inside input, #lang-menu-inside label {
+  vertical-align:middle;
+  cursor:pointer;
+}
+#lang-menu-inside input {
+  margin:0;
+}
+
+#install-btn {
+  margin-top: 1em;
+}
+
+#wrapper {
+  width:750px;
+  background:#f4fafb;
+  margin:0px auto;
+  border:1px solid #bbdde5;
+}
+
+#monitor {
+  display:none;
+  text-align:left;
+  position:absolute;
+  top:45%;
+  left:35%;
+  width:300px;
+  z-index:1000;
+  border:1px solid #000;
+}
+
+#monitor-wait-please {
+  color:blue;
+  width:65%;
+  float:left;
+  margin-left:3px;
+}
+
+#monitor-view-detail {
+  color:gray;
+  cursor:pointer;
+  float:right;
+  margin-right:3px;
+}
+
+#notice {
+  background:#fff;
+  margin:0px;
+  padding:5px 0 0 3px;
+  height:100%;
+  font:12px Arial, Helvetica, sans-serif;
+  line-height:130%;
+  border-color: #BBDDE5 -moz-use-text-color #BBDDE5 #BBDDE5;
+  border-style: dashed;
+  border-width: 1px 0 0 0;
+}
+
+.button {
+  padding: 2px 8px 0px;
+  margin: 2px 2px;
+  border: 1px solid #2D5082;
+  background: url(/img/button_bg.gif) repeat-x top center;
+}
+
+.list {
+  text-align: left;
+  margin:10px 50px;
+}
+
+.comment {
+  color: #888;
+}
