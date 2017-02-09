@@ -21,7 +21,7 @@ class App
 			$args = [];
 			foreach ($params as $param) {
 				$name = $param->getName();
-				isset($_REQUEST[$name]) && $args[] = $_REQUEST[$name];
+				isset($_REQUEST[$name]) && $args[] = trim($_REQUEST[$name]);
 			}
 			$method->invokeArgs($controller, $args);
 		} else {

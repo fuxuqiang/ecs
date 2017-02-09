@@ -99,7 +99,7 @@
                 <tr>
                   <td width="90">{$lang.set_timezone}</td>
                   <td>
-                    <input type="text" name="js-timezones" value="<?= date_default_timezone_get() ?>">
+                    <input type="text" name="timezone" value="<?= date_default_timezone_get() ?>">
                   </td>
                 </tr>
                 <tr>
@@ -124,7 +124,7 @@
 </body>
 <script type="text/javascript" src="/js/ajax.js"></script>
 <script type="text/javascript" src="/js/select_lang.js"></script>
-<script type="text/javascript" src="/js/draggable.js"></script>
+<script type="text/javascript" src="/js/drag.js"></script>
 <script type="text/javascript">
   var form = document.getElementsByTagName('form')[0];
   var dbName = form['db-name'];
@@ -134,6 +134,8 @@
   var confirmPwdResult = document.getElementById('confirm-pwd-result');
   var yes = '<img src="/img/yes.gif">';
   var monitor = document.getElementById('monitor');
+  var mn = document.getElementById('monitor-notice');
+  var viewDetail = document.getElementById('monitor-view-detail');
 
   form['admin-pwd'].onkeyup = function() {
     var pwd = form['admin-pwd'].value;
@@ -226,15 +228,8 @@
     }
   }
 
-  document.getElementById('monitor-view-detail').onclick = function(){
-    var mn = document.getElementById('monitor-notice');
-    if (mn.style.display == 'block') {
-        mn.style.display = 'none';
-        this.innerHTML = '{$lang.display_detail}';
-    } else {
-        mn.style.display = 'block';
-        this.innerHTML = '{$lang.hide_detail}';
-    }
+  viewDetail.onclick = function(){
+    dispalyDetail(mn.style.display);
   }
 
   function getDbList(fn) {
@@ -284,7 +279,7 @@
 
   function isDisabled(flag) {
     if (flag) {
-      installAtOnce.setAttribute('disabled', 'true');
+      installAtOnce.setAttribute('disabled', true);
     } else {
       installAtOnce.removeAttribute('disabled');
     }
@@ -292,12 +287,43 @@
 
   function install() {
     for (var i = 0; i < form.elements.length; i++) {
-      form.elements[i].disabled = 'true';
+      form.elements[i].disabled = true;
     }
-    document.getElementById('monitor-wait-please').innerHTML = '<strong style="color:blue">' +'{$lang.wait_please}'+'</strong>';
+    document.getElementById('monitor-wait-please').innerHTML = '<strong style="color:blue">{$lang.wait_please}</strong>';
     monitor.style.display = 'block';
+    var notice = document.getElementById('notice');
+    notice.innerHTML = '{$lang.create_config_file}';
+    Ajax.get('/install/createConfFile', {
+      host: form['db-host'].value, 
+      port: form['db-port'].value,
+      user: form['db-user'].value,
+      pass: form['db-pass'].value,
+      name: dbName.value,
+      prefix: form['db-prefix'].value,
+      timezone: form['timezone'].value
+    }, function(msg){
+      if (msg == 'ok') {
+        notice.innerHTML += '<span style="color:green;">{$lang.success}</span><br/>';
+      } else {
+        document.getElementById('monitor-loading').src = '/img/loaded.gif';
+        document.getElementById('monitor-wait-please').innerHTML = '{$lang.has_been_stopped}';
+        notice.innerHTML += '<span style="color:red;">{$lang.fail}</span><br/>';
+        dispalyDetail();
+        notice.innerHTML += '<strong style="color:red">'+msg+'</strong>';
+      }
+    });
   }
 
-  Draggable.bindDragNode('monitor', 'monitor-title');
+  function dispalyDetail(flag) {
+    if (flag == 'block') {
+        mn.style.display = 'none';
+        viewDetail.innerHTML = '{$lang.display_detail}';
+    } else {
+        mn.style.display = 'block';
+        viewDetail.innerHTML = '{$lang.hide_detail}';
+    }
+  }
+
+  Drag.bindDragNode('monitor', 'monitor-title');
 </script>
 @endsection

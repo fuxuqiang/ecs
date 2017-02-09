@@ -1,4 +1,4 @@
-var Draggable =
+var Drag =
 {
 	bindDragNode: function(dragged, flagged)
 	{

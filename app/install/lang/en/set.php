@@ -34,4 +34,8 @@ return [
 	'monitor_title' => 'Installer Moniter',
 	'display_detail' => 'Show detail',
 	'hide_detail' => 'Hide detail',
+	'create_config_file' => 'Create config file............',
+	'success' => 'Succeed',
+	'fail' => 'Fail',
+	'has_been_stopped' => 'The process has been stopped',
 ];

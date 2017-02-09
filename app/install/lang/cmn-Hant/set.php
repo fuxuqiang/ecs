@@ -34,4 +34,8 @@ return [
 	'monitor_title' => '安裝程序監視器',
 	'display_detail' => '顯示細節',
 	'hide_detail' => '隱藏細節',
+	'create_config_file' => '創建配置文件............',
+	'success' => '成功',
+	'fail' => '失敗',
+	'has_been_stopped' => '安裝進程已完成',
 ];
