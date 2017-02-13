@@ -1,14 +1,5 @@
 <?php
 
-function config($name)
-{
-	static $config;
-	if ($config === null) {
-		$config = require ROOT_PATH.'data/config.php';
-	}
-	return isset($config[$name])? $config[$name]:'';
-}
-
 function local_date($format)
 {
     $time = isset(Config::$data['zone'])?:0;

@@ -8,16 +8,16 @@ class Install
 	public function index()
 	{
 		if (is_file(ROOT_PATH.'data/install.lock')) {
-			view('error', ['lang' => lang_var('error', false)], true);
+			view('error', ['lang' => lang_var('error')], true);
 		} else {
-			view('welcome', ['lang' => lang_var('welcome')], true);
+			view('welcome', ['lang' => lang_var('welcome', true)], true);
 		}
 	}
 
 	// 安装环境检测页
 	public function checking()
 	{
-		view('checking', ['lang' => lang_var('check')], true);
+		view('checking', ['lang' => lang_var('check', true)], true);
 	}
 
 	// 输出检测结果
@@ -51,7 +51,7 @@ class Install
 	// 配置页
 	public function set()
 	{
-		view('set', ['lang' => lang_var('set')]);
+		view('set', ['lang' => lang_var('set', true)]);
 	}
 
 	// 查询数据库列表
@@ -59,13 +59,13 @@ class Install
 	{
 		$db = @new \mysqli($host, $user, $pass, null, $port);
 		if ($db->connect_errno) {
-			echo json_encode(['status'=>false, 'content'=>lang_var('common')['query_failed']]);
+			exit(json_encode(['status'=>false, 'content'=>lang_var('common')['query_failed']]));
 		} else {
 			$dirCheck = $db->query('SHOW DATABASES');
 			while ($row = $dirCheck->fetch_row()) {
 				$databases[] = $row[0];
 			}
-			echo json_encode(['status'=>true, 'content'=>$databases]);
+			exit(json_encode(['status'=>true, 'content'=>$databases]));
 		}
 	}
 
@@ -75,10 +75,26 @@ class Install
 		$content = file_get_contents(ROOT_PATH.'config/config.tpl');
 		$pairs = ['[host]'=>$host, '[port]'=>$port, '[user]'=>$user, '[pass]'=>$pass, '[name]'=>$name, '[prefix]'=>$prefix, '[timezone]'=>$timezone];
 		$content = strtr($content, $pairs);
-		if (file_put_contents(ROOT_PATH.'config/config.php', $content)) {
+		if (@file_put_contents(ROOT_PATH.'config/config.php', $content)) {
 			exit('ok');
 		} else {
-			exit(lang_var(''));
+			exit(lang_var('common')['write_config_file_failed']);
 		}
+	}
+
+	// 创建数据库
+	public function createDB()
+	{
+		$settings = config('db');
+		$db = @new \mysqli($settings['host'], $settings['user'], $settings['pass'], null, $port);
+		if ($db->connect_errno) {
+			exit(lang_var('common')['connect_failed']);
+		} else {
+			$db->set_charset($settings['charset_set']);
+		}
+		if ($db->select_db($settings['name'])) {
+			$db->query('CREATE DATABASE '.$settings['name']);
+		}
+		exit('ok');
 	}
 }

@@ -4,6 +4,22 @@ use includes\App;
 use includes\Config;
 
 /**
+ * 获取配置
+ *
+ * @param string $name
+ *
+ * @return mixed
+ */
+function config($name)
+{
+    static $config;
+    if ($config === null) {
+        $config = require ROOT_PATH.'config/config.php';
+    }
+    return isset($config[$name])? $config[$name]:'';
+}
+
+/**
  * 数据库操作类实例
  *
  * @param array $settings 
@@ -63,7 +79,7 @@ function lang()
  * 
  * @return mixed
  */
-function lang_var($name, $getCommon = true)
+function lang_var($name, $getCommon = false)
 {
     $lang = lang();
     $langPath = module_path('lang/'.$lang.'/');

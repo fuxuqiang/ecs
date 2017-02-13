@@ -303,13 +303,21 @@
       timezone: form['timezone'].value
     }, function(msg){
       if (msg == 'ok') {
-        notice.innerHTML += '<span style="color:green;">{$lang.success}</span><br/>';
+        displayOKMsg();
+        createDB();
       } else {
-        document.getElementById('monitor-loading').src = '/img/loaded.gif';
-        document.getElementById('monitor-wait-please').innerHTML = '{$lang.has_been_stopped}';
-        notice.innerHTML += '<span style="color:red;">{$lang.fail}</span><br/>';
-        dispalyDetail();
-        notice.innerHTML += '<strong style="color:red">'+msg+'</strong>';
+        displayErrorMsg(msg);
+      }
+    });
+  }
+
+  function createDB() {
+    notice.innerHTML += '{$lang.create_database}';
+    Ajax.get('/install/createDB', '', function(msg){
+      if (msg == 'ok') {
+        displayOKMsg();
+      } else {
+        displayErrorMsg(msg);
       }
     });
   }
@@ -322,6 +330,18 @@
         mn.style.display = 'block';
         viewDetail.innerHTML = '{$lang.hide_detail}';
     }
+  }
+
+  function displayOKMsg() {
+      notice.innerHTML += '<span style="color:green;">{$lang.success}</span><br/>';
+  }
+
+  function displayErrorMsg(msg) {
+    document.getElementById('monitor-loading').src = '/img/loaded.gif';
+    document.getElementById('monitor-wait-please').innerHTML = '{$lang.has_been_stopped}';
+    notice.innerHTML += '<span style="color:red;">{$lang.fail}</span><br/>';
+    dispalyDetail();
+    notice.innerHTML += '<strong style="color:red">'+msg+'</strong>';
   }
 
   Drag.bindDragNode('monitor', 'monitor-title');
