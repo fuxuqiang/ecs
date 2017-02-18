@@ -23,7 +23,7 @@ class Install
 	// 输出检测结果
 	public function checked()
 	{
-		$lang = lang_var('check');
+		$lang = lang_var('check', true);
 		$disabled = '';
 		$dirs = ['temp/compile', 'config'];
 		foreach ($dirs as $key => $dir) {
@@ -72,7 +72,7 @@ class Install
 	// 创建配置文件
 	public function createConfFile($host, $port, $user, $pass, $name, $prefix, $timezone)
 	{
-		$content = file_get_contents(ROOT_PATH.'config/config.tpl');
+		$content = file_get_contents(module_path('data/config.tpl'));
 		$pairs = ['[host]'=>$host, '[port]'=>$port, '[user]'=>$user, '[pass]'=>$pass, '[name]'=>$name, '[prefix]'=>$prefix, '[timezone]'=>$timezone];
 		$content = strtr($content, $pairs);
 		if (@file_put_contents(ROOT_PATH.'config/config.php', $content)) {
@@ -85,16 +85,49 @@ class Install
 	// 创建数据库
 	public function createDB()
 	{
+		$lang = lang_var('common');
 		$settings = config('db');
 		$db = @new \mysqli($settings['host'], $settings['user'], $settings['pass'], null, $port);
 		if ($db->connect_errno) {
-			exit(lang_var('common')['connect_failed']);
+			exit($lang['connect_failed']);
 		} else {
-			$db->set_charset($settings['charset_set']);
+			$db->set_charset('utf8');
 		}
-		if ($db->select_db($settings['name'])) {
-			$db->query('CREATE DATABASE '.$settings['name']);
+		if (!$db->query('CREATE DATABASE IF NOT EXISTS `'.$settings['name'].'` CHARACTER SET utf8')) {
+			exit($lang['cannt_create_database']);
 		}
 		exit('ok');
+	}
+
+	// 安装数据
+	public function installBaseData()
+	{
+		// 获取数据库配置
+		$settings = config('db');
+		// 读取SQL
+		$sql = file_get_contents(module_path('data/structure.sql'));
+		$sql = strtr($sql, ["\r"=>'', '`ecs_'=>"`{$settings['prefix']}"]);
+		$queryItems = explode(";\n", $sql);
+		// 连接数据库
+		$db = new \mysqli($settings['host'], $settings['user'], $settings['pass'], $settings['name'], $settings['port']);
+		$db->set_charset('utf8');
+		// 执行SQL
+		foreach ($queryItems as $value) {
+			if (!$db->query($value)) {
+				exit($db->error);
+			}
+		}
+		// 响应
+		exit('ok');
+	}
+
+	// 
+	public function createAdminPassport($name, $pass, $email)
+	{
+		if ($pass === '') {
+			exit(lang_var('common')['password_empty_error']);
+		}
+		$db = db();
+		// $db->query('INSERT __admin_user__ (`user_name`,`email`,`password`,`add_time`,`action_list`,`nav_list`) VALUES (?,?,?,?,?,?)', [$name, $email]);
 	}
 }

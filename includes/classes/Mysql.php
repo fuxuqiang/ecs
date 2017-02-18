@@ -9,15 +9,11 @@ final class Mysql
 {
     private static $instance;
 
-    private $settings = [
-        'name'    => null,   // 数据库名
-        'prefix'  => '',     // 表前缀
-        'port'    => '3306', // 端口号
-        'quiet'   => false,  // 是否忽略错误
-        'charset' => 'utf8'  // 字符编码
-    ];
+    private $settings = ['quiet'=>false];
 
     private $linkID;
+
+    public $error;
 
     private function __construct($settings)
     {
@@ -57,8 +53,34 @@ final class Mysql
         $sql = preg_replace('/__(\w+?)__/', '`'.$this->settings['prefix'].'$1`', $sql);
         // 执行查询
         if (!$stmt = $this->linkID->prepare($sql)) {
-            trigger_error($this->linkID->error, E_USER_ERROR);
+            if ($this->settings['quiet']) {
+                $this->error = $this->linkID->error;
+                return false;
+            } else {
+                trigger_error($this->linkID->error, E_USER_ERROR);
+            }
         }
+        // if ($bindings) {
+        //     $types = '';
+        //     foreach ($bindings as $v) {
+        //         switch (gettype($v)) {
+        //             case 'integer':
+        //                 $types .= 'i';
+        //                 break;
+        //             case 'double':
+        //                 $types .= 'd';
+        //                 break;
+        //             case 'string':
+        //                 $types .= 's';
+        //                 break;
+        //             default:
+        //                 $types .= 's';
+        //                 break;
+        //         }
+        //     }
+        //     $bindings = array_unshift($bindings, $types);
+        //     call_user_func_array([$stmt, 'bind_param'], $bindings);
+        // }
         $stmt->execute();
         // 返回查询结果
         return $stmt->get_result();
@@ -73,6 +95,14 @@ final class Mysql
             return $result->fetch_all(MYSQLI_ASSOC);
         }
     }
+
+    // public function insert($table, array $data)
+    // {
+    //     $sql = 'INSERT '.$this->settings['prefix'].$table;
+    //     foreach ($data as $key => $value) {
+    //         $sql .= ' SET `'.$key.'`=?,';
+    //     }
+    // }
 
     private function __clone() {}
 

@@ -38,4 +38,7 @@ return [
 	'success' => 'Succeed',
 	'fail' => 'Fail',
 	'has_been_stopped' => 'The process has been stopped',
+	'create_database' => 'Create database................',
+	'install_data' => 'Install data.......................',
+	'create_admin_passport' => 'Create administrator accounts......',
 ];

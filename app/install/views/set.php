@@ -56,6 +56,7 @@
                   <div id="notice"></div>
                   <a id="bottom"></a>
                 </div>
+                <img id="monitor-close" src='/img/close.gif' />
               </div>
               <h3>{$lang.admin_account}</h3>
               <table class="list">
@@ -91,7 +92,7 @@
                 </tr>
                 <tr>
                   <td width="90">{$lang.admin_email}</td>
-                  <td><input type="text" name="js-admin-email" value="" /></td>
+                  <td><input type="text" name="admin-email" value="" /></td>
                 </tr>
               </table>
               <h3>{$lang.mix_options}</h3>
@@ -228,6 +229,13 @@
     }
   }
 
+  form['monitor-close'].onclick = function(){
+      monitor.style.display = 'none';
+      for (var i = 0; i < form.elements.length; i++) {
+        form.elements[i].removeAttribute('disabled');
+      }
+  };
+
   viewDetail.onclick = function(){
     dispalyDetail(mn.style.display);
   }
@@ -302,24 +310,42 @@
       prefix: form['db-prefix'].value,
       timezone: form['timezone'].value
     }, function(msg){
-      if (msg == 'ok') {
-        displayOKMsg();
-        createDB();
-      } else {
-        displayErrorMsg(msg);
-      }
+      handleMsg(msg, createDB);
     });
   }
 
   function createDB() {
     notice.innerHTML += '{$lang.create_database}';
     Ajax.get('/install/createDB', '', function(msg){
-      if (msg == 'ok') {
-        displayOKMsg();
-      } else {
-        displayErrorMsg(msg);
-      }
+      handleMsg(msg, installBaseData);
     });
+  }
+
+  function installBaseData() {
+    notice.innerHTML += '{$lang.install_data}';
+    Ajax.get('/install/installBaseData', '', function(msg){
+      handleMsg(msg, createAdminPassport);
+    });
+  }
+
+  function createAdminPassport() {
+    notice.innerHTML += '{$lang.create_admin_passport}';
+    Ajax.get('/install/createAdminPassport', {
+      name: form['admin-name'].value,
+      pass: form['admin-pwd'].value,
+      email: form['admin-email'].value
+    }, function(msg){
+      
+    });
+  }
+
+  function handleMsg(msg, next) {
+    if (msg == 'ok') {
+      displayOKMsg();
+      next();
+    } else {
+      displayErrorMsg(msg);
+    }
   }
 
   function dispalyDetail(flag) {

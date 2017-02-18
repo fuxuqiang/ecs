@@ -110,6 +110,13 @@ input, select {
   margin-right:3px;
 }
 
+#monitor-close {
+  position:absolute;
+  top:10px;
+  right:10px;
+  cursor:pointer;
+}
+
 #notice {
   background:#fff;
   margin:0px;

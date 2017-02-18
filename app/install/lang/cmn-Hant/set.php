@@ -38,4 +38,7 @@ return [
 	'success' => '成功',
 	'fail' => '失敗',
 	'has_been_stopped' => '安裝進程已完成',
+	'create_database' => '創建數據庫............',
+	'install_data' => '安裝數據............',
+	'create_admin_passport' => '創建管理員帳號............',
 ];
