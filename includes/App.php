@@ -1,7 +1,6 @@
 <?php
 
 namespace includes;
-use includes\classes\Cache;
 
 class App
 {
