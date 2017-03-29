@@ -41,4 +41,5 @@ return [
 	'create_database' => 'Create database................',
 	'install_data' => 'Install data.......................',
 	'create_admin_passport' => 'Create administrator accounts......',
+	'do_others' => 'Deal with others...................',
 ];

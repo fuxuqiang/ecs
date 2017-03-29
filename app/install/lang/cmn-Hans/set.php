@@ -41,4 +41,5 @@ return [
 	'create_database' => '创建数据库............',
 	'install_data' => '安装数据............',
 	'create_admin_passport' => '创建管理员帐号............',
+	'do_others' => '处理其它............',
 ];

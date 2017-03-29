@@ -41,4 +41,5 @@ return [
 	'create_database' => '創建數據庫............',
 	'install_data' => '安裝數據............',
 	'create_admin_passport' => '創建管理員帳號............',
+	'do_others' => '處理其它............',
 ];
