@@ -2,7 +2,7 @@
 // 配置文件
 return [
 
-	'debug_mode' => 1,
+	'debug' => true,
 
 	// 数据库配置
 	'db' => [

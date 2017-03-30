@@ -7,7 +7,7 @@ class Install
 	// 首页
 	public function index()
 	{
-		if (is_file(ROOT_PATH.'data/install.lock')) {
+		if (is_file(ROOT_PATH.'config/install.lock')) {
 			view('error', ['lang' => lang_var('error')], true);
 		} else {
 			view('welcome', ['lang' => lang_var('welcome', true)], true);
@@ -61,8 +61,8 @@ class Install
 		if ($db->connect_errno) {
 			exit(json_encode(['status'=>false, 'content'=>lang_var('common')['query_failed']]));
 		} else {
-			$dirCheck = $db->query('SHOW DATABASES');
-			while ($row = $dirCheck->fetch_row()) {
+			$rst = $db->query('SHOW DATABASES');
+			while ($row = $rst->fetch_row()) {
 				$databases[] = $row[0];
 			}
 			exit(json_encode(['status'=>true, 'content'=>$databases]));
@@ -107,13 +107,13 @@ class Install
 		// 读取SQL
 		$sql = file_get_contents(module_path('data/structure.sql'));
 		$sql = strtr($sql, ["\r"=>'', '`ecs_'=>"`{$settings['prefix']}"]);
-		$queryItems = explode(";\n", $sql);
+		$items = explode(";\n", $sql);
 		// 连接数据库
 		$db = new \mysqli($settings['host'], $settings['user'], $settings['pass'], $settings['name'], $settings['port']);
 		$db->set_charset('utf8');
 		// 执行SQL
-		foreach ($queryItems as $value) {
-			if (!$db->query($value)) {
+		foreach ($items as $item) {
+			if (!$db->query($item)) {
 				exit($db->error);
 			}
 		}
@@ -121,13 +121,42 @@ class Install
 		exit('ok');
 	}
 
-	// 
+	// 创建管理员账户
 	public function createAdminPassport($name, $pass, $email)
 	{
 		if ($pass === '') {
 			exit(lang_var('common')['password_empty_error']);
 		}
-		$db = db();
-		// $db->query('INSERT __admin_user__ (`user_name`,`email`,`password`,`add_time`,`action_list`,`nav_list`) VALUES (?,?,?,?,?,?)', [$name, $email]);
+		$rst = db('admin_user')->insert([
+			'user_name' => $name,
+			'email' => $email,
+			'password' => md5($pass),
+			'add_time' => time()
+		]);
+		if ($rst) {
+			exit('ok');
+		}
+	}
+
+	// 处理其它
+	public function doOthers($lang)
+	{
+		// 写入语言配置
+		$rst = db('shop_config')->insert([
+			'code' => 'lang',
+			'value' => $lang
+		]);
+		// 写入安装锁定文件
+		$handle = fopen(ROOT_PATH.'config/install.lock', 'w');
+		// 响应
+		if ($rst && $handle) {
+			exit('ok');
+		}
+	}
+
+	// 安装完成
+	public function done()
+	{
+		
 	}
 }

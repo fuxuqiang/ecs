@@ -62,12 +62,12 @@
               <table class="list">
                 <tr>
                   <td width="90">{$lang.admin_name}</td>
-                  <td><input type="text" name="admin-name" /></td>
+                  <td><input type="text" name="admin-name" required></td>
                 </tr>
                 <tr>
                   <td width="90">{$lang.admin_password}</td>
                   <td>
-                    <input type="password" name="admin-pwd" />
+                    <input type="password" name="admin-pwd" required>
                     <span id="admin-pwd-result"></span>
                   </td>
                 </tr>
@@ -127,26 +127,26 @@
 <script type="text/javascript" src="/js/select_lang.js"></script>
 <script type="text/javascript" src="/js/drag.js"></script>
 <script type="text/javascript">
-  var form = document.getElementsByTagName('form')[0];
-  var dbName = form['db-name'];
-  var dbList = form['db-list'];
-  var adminPwdResult = document.getElementById('admin-pwd-result');
-  var installAtOnce = document.getElementById('install-at-once');
-  var confirmPwdResult = document.getElementById('confirm-pwd-result');
-  var yes = '<img src="/img/yes.gif">';
-  var monitor = document.getElementById('monitor');
-  var mn = document.getElementById('monitor-notice');
-  var viewDetail = document.getElementById('monitor-view-detail');
+  var form = document.getElementsByTagName('form')[0],
+      dbName = form['db-name'],
+      dbList = form['db-list'],
+      adminPwdResult = document.getElementById('admin-pwd-result'),
+      installAtOnce = document.getElementById('install-at-once'),
+      confirmPwdResult = document.getElementById('confirm-pwd-result'),
+      yes = '<img src="/img/yes.gif">',
+      monitor = document.getElementById('monitor'),
+      mn = document.getElementById('monitor-notice'),
+      viewDetail = document.getElementById('monitor-view-detail');
 
   form['admin-pwd'].onkeyup = function() {
-    var pwd = form['admin-pwd'].value;
-    var mColor, lColor, hColor;
-    var off = '2px solid #DADADA';
-    var m = 0;
-    var modes = 0;
+    var pwd = form['admin-pwd'].value,
+        mColor, lColor, hColor,
+        off = '2px solid #DADADA',
+        m = 0,
+        modes = 0;
     for (i=0; i<pwd.length; i++) {
-      var charType;
-      var t = pwd.charCodeAt(i);
+      var charType,
+          t = pwd.charCodeAt(i);
       if (t>=48 && t <=57) {
         charType = 1;
       } else if (t>=65 && t <=90) {
@@ -186,8 +186,8 @@
   }
 
   form['admin-pwd'].onblur = function(){
-    var pwd = form['admin-pwd'].value;
-    var pwd2 = form['admin-pwd2'].value;
+    var pwd = form['admin-pwd'].value,
+        pwd2 = form['admin-pwd2'].value;
     if (isPwdInvalid(pwd)) {
       adminPwdResult.innerHTML = yes;
       if (pwd == pwd2) {
@@ -211,8 +211,8 @@
   }
 
   form['admin-pwd2'].onblur = function(){
-    var pwd = form['admin-pwd'].value;
-    var pwd2 = form['admin-pwd2'].value;
+    var pwd = form['admin-pwd'].value,
+        pwd2 = form['admin-pwd2'].value;
     if (isPwdInvalid(pwd) && pwd == pwd2) {
       isDisabled(false);
       confirmPwdResult.innerHTML = yes;
@@ -335,7 +335,29 @@
       pass: form['admin-pwd'].value,
       email: form['admin-email'].value
     }, function(msg){
-      
+      handleMsg(msg, doOthers);
+    });
+  }
+
+  function doOthers() {
+    notice.innerHTML += '{$lang.do_others}';
+    var langs = document.getElementsByName('lang');
+    for (var i = 0; i < langs.length; i++) {
+      if (langs[i].checked) {
+        lang = langs[i].value;
+      }
+    }
+    Ajax.get('/install/doOthers', {
+      lang: lang
+    }, function(msg){
+      handleMsg(msg, done);
+    });
+  }
+
+  function done() {
+    stopped();
+    setTimeout(function () {
+      location.href = '/install/done';
     });
   }
 
@@ -363,11 +385,15 @@
   }
 
   function displayErrorMsg(msg) {
-    document.getElementById('monitor-loading').src = '/img/loaded.gif';
-    document.getElementById('monitor-wait-please').innerHTML = '{$lang.has_been_stopped}';
+    stopped();
     notice.innerHTML += '<span style="color:red;">{$lang.fail}</span><br/>';
     dispalyDetail();
     notice.innerHTML += '<strong style="color:red">'+msg+'</strong>';
+  }
+
+  function stopped() {
+    document.getElementById('monitor-loading').src = '/img/loaded.gif';
+    document.getElementById('monitor-wait-please').innerHTML = '{$lang.has_been_stopped}';
   }
 
   Drag.bindDragNode('monitor', 'monitor-title');

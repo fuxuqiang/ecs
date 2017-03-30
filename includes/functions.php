@@ -22,18 +22,22 @@ function config($name)
 /**
  * 数据库操作类实例
  *
- * @param array $settings 
+ * @param string $name 
  *
  * @return \includes\classes\Mysql
  */
-function db($settings = false)
+function db($name = false)
 {
-    if (!$settings) {
+    static $settings;
+    if ($settings === null) {
         $settings = config('db');
-        $settings['debug'] = config('debug_mode');
+        $settings['debug'] = config('debug');
         $settings['charset'] = config('charset');
     }
     $db = \includes\classes\Mysql::getInstance($settings);
+    if ($name) {
+        $db->table($name);
+    }
     return $db;
 }
 
@@ -65,7 +69,7 @@ function lang()
         if (isset($_REQUEST['lang'])) {
             $lang = $_REQUEST['lang'];
         } else {
-            $lang = isset(Config::$data['lang']) ?: 'cmn-Hans';
+            $lang = isset(Config::$data['lang']) ? Config::$data['lang'] : 'cmn-Hans';
         }
     }
     return $lang;
