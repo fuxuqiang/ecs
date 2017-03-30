@@ -126,6 +126,7 @@
 <script type="text/javascript" src="/js/ajax.js"></script>
 <script type="text/javascript" src="/js/select_lang.js"></script>
 <script type="text/javascript" src="/js/drag.js"></script>
+<script type="text/javascript" src="/js/set.js"></script>
 <script type="text/javascript">
   var form = document.getElementsByTagName('form')[0],
       dbName = form['db-name'],
@@ -277,14 +278,6 @@
     };
   }
 
-  function isPwdInvalid(pwd) {
-    return pwd.length >= 8 && /\d+/.test(pwd) && /[a-zA-z]+/.test(pwd);
-  }
-
-  function htmlOfNo(msg) {
-    return '<span class="comment"><img src="/img/no.gif">'+msg+'</span>';
-  }
-
   function isDisabled(flag) {
     if (flag) {
       installAtOnce.setAttribute('disabled', true);
@@ -358,7 +351,7 @@
     stopped();
     setTimeout(function () {
       location.href = '/install/done?lang='+getLang();
-    });
+    }, 1000);
   }
 
   function handleMsg(msg, next) {
