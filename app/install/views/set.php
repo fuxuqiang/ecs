@@ -357,7 +357,7 @@
   function done() {
     stopped();
     setTimeout(function () {
-      location.href = '/install/done';
+      location.href = '/install/done?lang='+getLang();
     });
   }
 
