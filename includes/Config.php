@@ -1,7 +1,7 @@
 <?php
 
 namespace includes;
-use classes\Cache;
+use \includes\classes\Cache;
 
 class Config
 {
@@ -25,7 +25,7 @@ class Config
 	private static function read()
 	{
 		$data = [];
-		$res = db()->getAll('SELECT `code`,`value` FROM __shop_config__');
+		$res = db('shop_config')->fetchAll();
 		foreach ($res as $row) {
 			$data[$row['code']] = $row['value'];
 		}

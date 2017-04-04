@@ -9,7 +9,7 @@ class App
 		// 解析URL
 		$dispatch = self::dispatch();
 		// 包含当前模块函数库文件
-		include ROOT_PATH.'app/'.$dispatch['module'].'/functions.php';
+		// include ROOT_PATH.'app/'.$dispatch['module'].'/functions.php';
 		// 实例化控制器
 		$class = '\\app\\'.$dispatch['module'].'\\'.$dispatch['class'];
 		$controller = new $class;

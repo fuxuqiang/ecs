@@ -15,8 +15,6 @@ final class Mysql
 
     private $linkID;
 
-    public $error;
-
     public static function getInstance(array $settings)
     {
         if (self::$instance === null) {
@@ -45,8 +43,9 @@ final class Mysql
 
     public function query($sql, array $data=[])
     {
-        $stmt = $this->linkID->prepare($sql);
-        return $stmt->execute($data);
+        $sth = $this->linkID->prepare($sql);
+        $sth->execute($data);
+        return $sth;
     }
 
     public function insert(array $data)
@@ -57,6 +56,12 @@ final class Mysql
         }
         $sql = rtrim($sql, ',');
         return $this->query($sql, array_values($data));
+    }
+
+    public function fetchAll()
+    {
+        $sql = 'SELECT * FROM `'.$this->table.'`';
+        return $this->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     private function __clone() {}

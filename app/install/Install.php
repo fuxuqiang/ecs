@@ -160,7 +160,7 @@ class Install
 		if (is_file(ROOT_PATH.'config/install.lock')) {
 			view('done', ['lang'=>lang_var('done')]);
 		} else {
-			header('Location: /install/index');
+			redirect('/install/index');
 		}
 	}
 }

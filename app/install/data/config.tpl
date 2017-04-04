@@ -19,7 +19,7 @@ return [
 	'timezone' => '[timezone]',
 
 	// 缓存配置
-	'cache_on'   => false,
+	'cache_on'   => true,
 	'cache_path' => 'temp/static_caches/'
 
 ];

@@ -42,22 +42,6 @@ function db($name = false)
 }
 
 /**
- * 获取当前模块路径
- *
- * @param string $path
- *
- * @return string
- */
-function module_path($path = '')
-{
-    static $module_path;
-    if ($module_path === null) {
-        $module_path = ROOT_PATH.'app/'.App::dispatch()['module'].'/';
-    }
-    return $module_path.$path;
-}
-
-/**
  * 获取当前选择语言
  *
  * @return string
@@ -105,6 +89,22 @@ function lang_var($name, $getCommon = false)
 }
 
 /**
+ * 获取当前模块路径
+ *
+ * @param string $path
+ *
+ * @return string
+ */
+function module_path($path = '')
+{
+    static $module_path;
+    if ($module_path === null) {
+        $module_path = ROOT_PATH.'app/'.App::dispatch()['module'].'/';
+    }
+    return $module_path.$path;
+}
+
+/**
  * 显示视图
  *
  * @param string $filename
@@ -122,4 +122,17 @@ function view($filename, $var, $direct_output=false)
         $template->directOutput = true;
     }
     echo $template->fetch($filename, $var);
+}
+
+/**
+ * 重定向
+ *
+ * @param string $url
+ *
+ * @return void
+ */
+function redirect($url)
+{
+    header('Location: '.$url);
+    exit();
 }
