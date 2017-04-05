@@ -2,11 +2,12 @@
 <head>
   <meta charset="utf-8">
   <title>{$lang.cp_home}</title>
-  <!-- <link href="styles/general.css" rel="stylesheet" type="text/css" />
-  <link href="styles/main.css" rel="stylesheet" type="text/css" /> -->
+  <link href="/css/admin/general.css" rel="stylesheet" type="text/css" />
 <!-- {literal} -->
 <style type="text/css">
-.login-body{ background: url(/img/admin/login_bg.jpg) no-repeat center center; }
+.login-body {
+  background: url(/img/admin/login_bg.jpg) no-repeat center center; 
+}
 
 .center-wrap .z-bd{
   width: 582px;
@@ -14,9 +15,9 @@
 .z-bd .login-panel{
   padding: 5px 20px 25px;
 }
-.login-cloud{
+/*.login-cloud{
   padding:70px 10px 20px;
-}
+}*/
 .center-wrap{
   width: 94%;
 }
@@ -34,30 +35,30 @@
 // var {$key} = "{$item}";
 // {/foreach}
 // {literal}
-if (window.parent != window) {
-  window.top.location.href = location.href;
-}
+// if (window.parent != window) {
+//   window.top.location.href = location.href;
+// }
 /*关闭按钮*/
-function get_certificate(){
-    var panel = document.getElementById('panelCloud');
-    var mask  = document.getElementById('CMask')||null;
-    var frame = document.getElementById('CFrame');
-    if(panel&&CMask&&frame){
-        panel.style.display = 'block';
-        mask.style.display = 'block';
-        frame.src = '{$activate_iframe_url}';
-      }
-  }
+// function get_certificate(){
+//     var panel = document.getElementById('panelCloud');
+//     var mask  = document.getElementById('CMask')||null;
+//     var frame = document.getElementById('CFrame');
+//     if(panel&&CMask&&frame){
+//         panel.style.display = 'block';
+//         mask.style.display = 'block';
+//         frame.src = '{$activate_iframe_url}';
+//       }
+//   }
 
-  /*关闭按钮*/
-  function btnCancel(item){
-    var par  = item.offsetParent;
-    var mask  = document.getElementById('CMask')||null;
-    var frame = document.getElementById('CFrame');
-    par.style.display = 'none';
-    if(mask){mask.style.display = 'none';}
-    frame.src = '';
-  }
+//   /*关闭按钮*/
+//   function btnCancel(item){
+//     var par  = item.offsetParent;
+//     var mask  = document.getElementById('CMask')||null;
+//     var frame = document.getElementById('CFrame');
+//     par.style.display = 'none';
+//     if(mask){mask.style.display = 'none';}
+//     frame.src = '';
+//   }
 //-->
 </script>
 </head>
