@@ -1,17 +1,21 @@
 <?php
 
 namespace app\install;
+use \includes\App;
 
 class Install
 {
+	public function __construct()
+	{
+		if (is_file(ROOT_PATH.'config/install.lock') && App::dispatch()['action'] != 'done') {
+			view('error', ['lang' => lang_var('error')], true);
+		}
+	}
+
 	// 首页
 	public function index()
 	{
-		if (is_file(ROOT_PATH.'config/install.lock')) {
-			view('error', ['lang' => lang_var('error')], true);
-		} else {
-			view('welcome', ['lang' => lang_var('welcome', true)], true);
-		}
+		view('welcome', ['lang' => lang_var('welcome', true)], true);
 	}
 
 	// 安装环境检测页
@@ -23,7 +27,11 @@ class Install
 	// 输出检测结果
 	public function checked()
 	{
+		// 获取语言变量
 		$lang = lang_var('check', true);
+		// 获取GD的版本号
+		$gd_ver = gd_info()['GD Version'];
+		// 检查目录权限
 		$disabled = '';
 		$dirs = ['temp/compile', 'config'];
 		foreach ($dirs as $key => $dir) {
@@ -42,10 +50,8 @@ class Install
 				$disabled = 'disabled="true"';
 			}
 		}
-		$var['dirCheck'] = $dirCheck;
-		$var['lang'] = $lang;
-		$var['disabled'] = $disabled;
-		view('checked', $var, true);
+		// 显示视图
+		view('checked', compact('gd_ver', 'dirCheck', 'lang', 'disabled'), true);
 	}
 
 	// 配置页

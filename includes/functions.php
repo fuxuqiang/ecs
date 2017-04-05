@@ -105,6 +105,19 @@ function module_path($path = '')
 }
 
 /**
+ * 重定向
+ *
+ * @param string $url
+ *
+ * @return void
+ */
+function redirect($url)
+{
+    header('Location: '.$url);
+    exit();
+}
+
+/**
  * 显示视图
  *
  * @param string $filename
@@ -121,18 +134,5 @@ function view($filename, $var, $direct_output=false)
     if ($direct_output) {
         $template->directOutput = true;
     }
-    echo $template->fetch($filename, $var);
-}
-
-/**
- * 重定向
- *
- * @param string $url
- *
- * @return void
- */
-function redirect($url)
-{
-    header('Location: '.$url);
-    exit();
+    exit($template->fetch($filename, $var));
 }

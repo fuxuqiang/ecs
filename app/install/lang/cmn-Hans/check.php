@@ -8,6 +8,7 @@ return [
 	'config_system' => '配置系统',
 	'php_os' => '操作系统',
 	'php_ver' => 'PHP 版本',
+	'gd_version' => 'GD 版本',
 	'dir_priv_checking' => '目录权限检测',
 	'can_write' => '可写',
 	'cannt_write' => '不可写',

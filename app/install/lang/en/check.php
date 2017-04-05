@@ -8,6 +8,7 @@ return [
 	'config_system' => 'Config system',
 	'php_os' => 'Operating system',
 	'php_ver' => 'PHP version',
+	'gd_version' => 'GD version',
 	'dir_priv_checking' => 'Check directory authorization',
 	'can_write' => 'Writable',
 	'cannt_write' => 'Not writable',
