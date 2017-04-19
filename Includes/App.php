@@ -1,6 +1,6 @@
 <?php
 
-namespace includes;
+namespace Includes;
 
 class App
 {
@@ -9,9 +9,9 @@ class App
 		// 解析URL
 		$dispatch = self::dispatch();
 		// 包含当前模块函数库文件
-		@include ROOT_PATH.'app/'.$dispatch['module'].'/functions.php';
+		@include ROOT_PATH.'App/'.$dispatch['module'].'/functions.php';
 		// 实例化控制器
-		$class = '\\app\\'.$dispatch['module'].'\\'.$dispatch['class'];
+		$class = '\\App\\'.$dispatch['module'].'\\'.$dispatch['class'];
 		$controller = new $class;
 		// 绑定参数并当前操作方法
 		$method = new \ReflectionMethod($controller, $dispatch['action']);
@@ -35,9 +35,10 @@ class App
 			if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO']!='/') {
 			    $paths = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 			}
-			$module = isset($paths[0])? $paths[0] : 'home';
-			if (is_file(ROOT_PATH.'app/'.$module.'/'.ucfirst($module).'.php')) {
-				$class = ucfirst($module);
+			$module = ucfirst(isset($paths[0])? $paths[0] : 'index');
+			// 是否存在与模块同名的类
+			if (is_file(ROOT_PATH.'App/'.$module.'/'.$module.'.php')) {
+				$class = $module;
 				$action = isset($paths[1])? $paths[1] : 'index';
 			} else {
 				$class = ucfirst(isset($paths[1])? $paths[1] : 'index');

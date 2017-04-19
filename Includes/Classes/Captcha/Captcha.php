@@ -1,11 +1,12 @@
 <?php
 
-namespace includes\classes\captcha;
+namespace Includes\Classes\Captcha;
 
 class Captcha
 {
 	// 生成验证码并显示在图片中
-	public static function generate($imgW, $imgH, $charLen = 4) {
+	public static function generate($imgW, $imgH, $charLen = 4) 
+	{
 		// 字体
 		$fontSize = $imgH/2;
 		$font = __DIR__.'/UbuntuMono-RI.ttf';
@@ -42,5 +43,13 @@ class Captcha
 		imagepng($img);
 		// 销毁
 		imagedestroy($img);
+	}
+
+	public static function check($captcha)
+	{
+		if ($captcha == $_SESSION['captcha']) {
+			return true;
+		}
+		return false;
 	}
 }

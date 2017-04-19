@@ -1,7 +1,7 @@
 <?php
 
-namespace includes;
-use \includes\classes\Cache;
+namespace Includes;
+use Includes\classes\Cache;
 
 class Config
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace includes\classes;
+namespace Includes\Classes;
 
 /**
  * 模版类

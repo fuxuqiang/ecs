@@ -1,7 +1,7 @@
 <?php
 
-namespace app\common;
-use includes\classes\captcha\Captcha;
+namespace App\Common;
+use Includes\Classes\Captcha\Captcha;
 
 class Verify
 {

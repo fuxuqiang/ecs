@@ -1,7 +1,7 @@
 <?php
 
-namespace app\admin;
-use app\common\Init;
+namespace App\Admin;
+use App\Common\Init;
 
 class Index extends Init
 {

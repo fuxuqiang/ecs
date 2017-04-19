@@ -1,7 +1,7 @@
 <?php
 
-namespace app\install;
-use \includes\App;
+namespace App\Install;
+use Includes\App;
 
 class Install
 {

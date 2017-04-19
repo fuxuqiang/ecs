@@ -6,7 +6,7 @@
   <script type="text/javascript" src="/js/utility.js"></script>
 </head>
 <body style="height: 100%;padding: 0">
-<form class="login-body" method="post" onsubmit="return validate()">
+<form class="login-body" method="post">
   <div class="center-wrap" id="centerWrap">
     <div class="z-bd">
     <!-- <div class="message">{$login_err}</div> -->

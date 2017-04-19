@@ -15,7 +15,7 @@ function __autoload($class)
 	}
 	require ROOT_PATH.$class.'.php';
 }
-require ROOT_PATH.'includes/functions.php';
+require ROOT_PATH.'Includes/functions.php';
 
 // 启动应用
-\includes\App::start();
+\Includes\App::start();

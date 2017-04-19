@@ -1,7 +1,7 @@
 <?php
 
-use includes\App;
-use includes\Config;
+use Includes\App;
+use Includes\Config;
 
 /**
  * 获取配置
@@ -99,7 +99,7 @@ function module_path($path = '')
 {
     static $module_path;
     if ($module_path === null) {
-        $module_path = ROOT_PATH.'app/'.App::dispatch()['module'].'/';
+        $module_path = ROOT_PATH.'App/'.App::dispatch()['module'].'/';
     }
     return $module_path.$path;
 }
@@ -128,7 +128,7 @@ function redirect($url)
  */
 function view($filename, $var, $direct_output=false)
 {
-    $template = new \includes\classes\Template;
+    $template = new \Includes\Classes\Template;
     $template->templateDir = module_path('views/');
     $template->compileDir = ROOT_PATH.'temp/compile/';
     if ($direct_output) {

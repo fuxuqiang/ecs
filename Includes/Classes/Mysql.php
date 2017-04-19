@@ -1,6 +1,6 @@
 <?php
 
-namespace includes\classes;
+namespace Includes\Classes;
 
 /**
  * 数据库操作类
