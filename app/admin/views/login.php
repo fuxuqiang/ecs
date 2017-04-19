@@ -4,42 +4,9 @@
   <title>{$lang.cp_home}</title>
   <link href="/css/admin/general.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="/js/utility.js"></script>
-<style type="text/css">
-.center-wrap .z-bd{
-  width: 582px;
-}
-.z-bd .login-panel{
-  padding: 5px 20px 25px;
-}
-.center-wrap{
-  width: 94%;
-}
-.center-wrap .z-bd{
-  background-size: contain;
-  height:391px;
-}
-</style>
-<script language="JavaScript">
-<!--
-// 这里把JS用到的所有语言都赋值到这里
-// if (window.parent != window) {
-//   window.top.location.href = location.href;
-// }
-
-//   /*关闭按钮*/
-//   function btnCancel(item){
-//     var par  = item.offsetParent;
-//     var mask  = document.getElementById('CMask')||null;
-//     var frame = document.getElementById('CFrame');
-//     par.style.display = 'none';
-//     if(mask){mask.style.display = 'none';}
-//     frame.src = '';
-//   }
-//-->
-</script>
 </head>
 <body style="height: 100%;padding: 0">
-<form class="login-body" method="post" action="privilege.php" name='theForm' onsubmit="return validate()">
+<form class="login-body" method="post" onsubmit="return validate()">
   <div class="center-wrap" id="centerWrap">
     <div class="z-bd">
     <!-- <div class="message">{$login_err}</div> -->
@@ -55,7 +22,7 @@
               </g>
             </g>
           </svg>
-          <input type="text" name="username" placeholder="{$lang.label_username}" />
+          <input type="text" name="username" placeholder="{$lang.label_username}" required>
         </div>
         <div class="controls two">
           <svg class="iconphone" width="20px" height="20px" viewBox="0 0 20 20">
@@ -94,77 +61,29 @@
           <a class="link-home cl-link-blue" href="../">{$lang.back_home}</a>
         </div>
       </div>
-      <!-- <div class="login-cloud" id="elseLogin">
-        <div class="hd">{$lang.other_login_methods}</div> -->
-        <!--<a id="cloudLogin" href="privilege.php?act=login&type=yunqi" target="_parent">-->
-        <!-- <span class="btn-tab" id="cloudLogin" href="javascript:void(0)" target="_parent">
-        </span>
-        <p>{$lang.yunqi_account}</p>
-      </div> -->
     </div>
   </div>
   <input type="hidden" name="act" value="signin" />
 </form>
-<!-- <div class="copy-right">&copy; 2003-{$now_year} ShopEx,Inc.All rights reserved.</div> -->
-<script language="JavaScript">
+<script type="text/javascript">
+  var form = document.getElementsByTagName('form')[0];
 
-// 三次密码输入错误,出现验证码
-(function () {
-  var loginNum = parseInt(getCookie('loginNum'));
-  if (loginNum > 3) {
-    var oInput=document.getElementsByClassName('capital')[0];
-    var oT=document.getElementsByClassName('third')[0];
-    if (oT) {
-      oT.classList.add('active');
-      oT.previousElementSibling.classList.add('active');
-      oInput.name='captcha';
+  // 三次密码输入错误,出现验证码
+  (function () {
+    var loginNum = parseInt(getCookie('loginNum'));
+    if (loginNum > 3) {
+      var oT = document.getElementsByClassName('third')[0];
+      if (oT) {
+        oT.style.display = 'block';
+        oT.previousElementSibling.style.borderRadius = 0;
+        document.getElementsByClassName('capital')[0].name='captcha';
+        form['captcha'].setAttribute('required', 'required');
+      }
+    } else {
+      setCookie('loginNum', loginNum ? loginNum+1 : '1');
     }
-  } else {
-    setCookie('loginNum', loginNum ? loginNum+1 : '1');
-  }
-})();
+  })();
 
-document.forms['theForm'].elements['username'].focus();
-
-  /**
-   * 检查表单输入的内容
-   */
-  function validate(){
-    var validator = new Validator('theForm');
-    validator.required('username', user_name_empty);
-    //validator.required('password', password_empty);
-    if (document.forms['theForm'].elements['captcha']) {
-      validator.required('captcha', captcha_empty);
-    }
-    return validator.passed();
-  }
-
-
-
-  // var dom ="<h3 class='logo-text yunqi-logo'><div class='logo'></div><p class='text'>云起登录</p></h3><div class='main'><span class='error-hint' {if !$error_msg } style='display:none' {/if} id='login_error_msg'></span><iframe id='loginFrame' src='' height='220' frameborder='0' scrolling='no'></iframe><div class='cloud-passw'><a target='_blank' href='https://account.shopex.cn/forget?' style='float:right;'>{$lang.forget_pwd}</a></div> </div>";
-  // var cloudLogin = document.getElementById('cloudLogin');
-  // var elsePanel = document.getElementById('elseLogin');
-  // var loginPanel = document.getElementById('loginPanel');
-  // var oldLogin  = loginPanel.innerHTML;
-  // var oldElseTxt = elsePanel.getElementsByTagName('p')[0].innerHTML;
-
-  // cloudLogin.onclick = function(){
-  //   loginTab();
-  // }
-  // function loginTab(){
-  //   if(JSON.stringify(elsePanel.classList).indexOf('ecshop')<0){
-  //      loginPanel.classList.add('cloud');
-  //     elsePanel.classList.add('ecshop');
-  //     loginPanel.innerHTML= dom;
-  //     elsePanel.getElementsByTagName('p')[0].innerHTML = '';
-  //     get_certificate();
-  //   }else{
-  //     loginPanel.classList.remove('cloud');
-  //     elsePanel.classList.remove('ecshop');
-  //     loginPanel.innerHTML= oldLogin;
-  //     elsePanel.getElementsByTagName('p')[0].innerHTML = oldElseTxt;
-  //   }
-  // }
-  
+  form['username'].focus();
 </script>
 </body>

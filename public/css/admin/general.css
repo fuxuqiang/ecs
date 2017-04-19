@@ -64,20 +64,20 @@ input.capital {
   }
 }
 
-/*login page --by evelyn*/
-.login-hd{ background: none; height: 44px; padding: 40px 0 40px 50px; }
-.center-wrap{ width: 1200px; margin: 0 auto; overflow: auto;}
-.center-wrap .top-ibg-wrap { width: 480px; height: 600px; float: left;}
-.center-wrap .top-ibg-wrap .top-ibg-480600 { display: block; width: 480px; height: 600px;}
-
+.center-wrap { 
+  width: 94%; 
+  margin: 0 auto; 
+  overflow: auto;
+}
 .center-wrap .z-bd {
-  width: 720px;
+  width: 582px;
   float: right;
   position: relative;
   overflow: hidden;
   padding-bottom: 42px;
   padding-top: 80px;
-  height: 400px;
+  height: 391px;
+  background-size: contain;
 }
 .z-bd .login-panel {
   position: absolute;
@@ -87,7 +87,7 @@ input.capital {
   height: 372px;
   /*background: rgba(255,255,255,.85);*/
   color: #A1A1A1;
-  padding: 5px 70px 25px;
+  padding: 5px 20px 25px;
   overflow: hidden;
   box-shadow: 5px 2px 20px rgba(0,0,0,.3);
   background: -moz-linear-gradient(359deg, rgba(241,249,255,1) 0%, rgba(255,255,255,1) 100%); /* ff3.6+ */
@@ -98,48 +98,25 @@ input.capital {
   background: linear-gradient(91deg, rgba(241,249,255,1) 0%, rgba(255,255,255,1) 100%); /* w3c */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f9ff', endColorstr='#fff',GradientType=1 ); /* ie6-9 */
 }
-.z-bd .login-panel .logo-text { margin: 0;}
-.z-bd .login-panel .logo-text .text { color: #d77f39; font-size: 18px; line-height: 40px; text-align: center; margin: 0; padding: 0;}
-.z-bd .login-panel .logo-text .logo { width: 162px; height: 42px; margin: 0 auto; background: url(/img/admin/ecshop_logo_03.png) no-repeat center;}
-.z-bd .login-panel .ecshop-logo { padding: 46px 0 30px; }
-.z-bd .login-panel .yunqi-logo { padding: 30px 0 8px;}
-.z-bd .login-panel.cloud{
-  left: auto;
-  right: 15px;
-  box-shadow: -5px 2px 20px rgba(0,0,0,.3);
+.z-bd .login-panel .logo-text { 
+  margin: 0;
 }
-.z-bd .login-cloud.ecshop{
-  right: auto;
-  background: -moz-linear-gradient(359deg, rgba(66,165,224,1) 0%, rgba(86,180,235,1) 100%); /* ff3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(66,165,224,1)), color-stop(100%, rgba(86,180,235,1))); /* safari4+,chrome */
-  background: -webkit-linear-gradient(359deg, rgba(66,165,224,1) 0%, rgba(86,180,235,1) 100%); /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(359deg, rgba(66,165,224,1) 0%, rgba(86,180,235,1) 100%); /* opera 11.10+ */
-  background: -ms-linear-gradient(359deg, rgba(66,165,224,1) 0%, rgba(86,180,235,1) 100%); /* ie10+ */
-  background: linear-gradient(91deg, rgba(66,165,224,1) 0%, rgba(86,180,235,1) 100%); /* w3c */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#42A5E0', endColorstr='#56B4EB',GradientType=1 ); /* ie6-9 */
+.z-bd .login-panel .logo-text .text { 
+  color: #d77f39; 
+  font-size: 18px; 
+  line-height: 40px; 
+  text-align: center; 
+  margin: 0; 
+  padding: 0;
 }
-.z-bd .login-panel.cloud {
-  background: -moz-linear-gradient(359deg, rgba(240,231,223,1) 0%, rgba(255,255,255,1) 100%); /* ff3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(240,231,223,1)), color-stop(100%, rgba(255,255,255,1))); /* safari4+,chrome */
-  background: -webkit-linear-gradient(359deg, rgba(240,231,223,1) 0%, rgba(255,255,255,1) 100%); /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(359deg, rgba(240,231,223,1) 0%, rgba(255,255,255,1) 100%); /* opera 11.10+ */
-  background: -ms-linear-gradient(359deg, rgba(240,231,223,1) 0%, rgba(255,255,255,1) 100%); /* ie10+ */
-  background: linear-gradient(91deg, rgba(240,231,223,1) 0%, rgba(255,255,255,1) 100%); /* w3c */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0e7df', endColorstr='#ffffff',GradientType=1 ); /* ie6-9 */
+.z-bd .login-panel .logo-text .logo { 
+  width: 162px; 
+  height: 42px; 
+  margin: 0 auto; 
+  background: url(/img/ecshop_logo_03.png) no-repeat center;
 }
-.z-bd .login-cloud.ecshop .btn-tab{
-  background: url(/img/admin/ecshop-n.png) no-repeat center center;
-}
-.z-bd .login-cloud.ecshop .btn-tab:hover{
-  background: url(/img/admin/ecshop-h.png) no-repeat center center;
-}
-.login-panel .panel-hd{
-  padding-bottom: 10px;
-  line-height: 1;
-  font-size: 18px;
-  margin: 18px 0;
-  text-align: center;
-  font-weight: normal;
+.z-bd .login-panel .ecshop-logo { 
+  padding: 46px 0 30px; 
 }
 .login-panel .controls {
   position: relative;
@@ -157,16 +134,10 @@ input.capital {
   border-radius:0 0 5px 5px;
   overflow:hidden;
 }
-.login-panel .controls.two.active{
-  border-radius:0;
-}
 .login-panel .controls.third{
   border-radius: 0 0 5px 5px ;
   overflow: hidden;
   display:none;
-}
-.login-panel .controls.third.active{
-  display:block;
 }
 .login-panel .controls.last{
   border: none;
@@ -383,28 +354,3 @@ input.capital {
 .panel-order-query tr,.panel-order-query td,.panel-order-query td div{
   line-height: 2;
 }
-
-/*order list page --by evelyn*/
-
-h1 .btn-add-goods a,h1 .btn-quick-goods a{
-  float: right;
-  width: 135px;
-  height: 33px;
-  border: none;
-  padding: 0;
-  background: url(../images/sprit.png) no-repeat -66px -1213px;
-}
-h1 .btn-add-goods a:hover,h1 .btn-add-goods a:hover{
-  border: none;
-  background: #FFF url(../images/sprit.png) no-repeat -66px -1259px;
-}
-h1 .btn-add-goods a:before{
-  display:none;
-}
-h1 .btn-quick-goods a{
-  background-position: -66px -1110px;
-}
-h1 .btn-quick-goods a:hover{
-  background-position: -66px -1163px;
-}
-#turn-page{ text-align: right;  }

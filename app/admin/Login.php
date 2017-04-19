@@ -7,6 +7,10 @@ class Login extends Init
 {
 	public function index()
 	{
-		view('login', ['lang'=>lang_var('login'), 'gd_ver'=>gd_info()['GD Version']]);
+		if (empty($_POST)) {
+			view('login', ['lang'=>lang_var('login'), 'gd_ver'=>gd_info()['GD Version']]);
+		} else {
+			
+		}
 	}
 }
