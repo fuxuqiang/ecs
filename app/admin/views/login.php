@@ -3,21 +3,14 @@
   <meta charset="utf-8">
   <title>{$lang.cp_home}</title>
   <link href="/css/admin/general.css" rel="stylesheet" type="text/css" />
-<!-- {literal} -->
+  <script type="text/javascript" src="/js/utility.js"></script>
 <style type="text/css">
-.login-body {
-  background: url(/img/admin/login_bg.jpg) no-repeat center center; 
-}
-
 .center-wrap .z-bd{
   width: 582px;
 }
 .z-bd .login-panel{
   padding: 5px 20px 25px;
 }
-/*.login-cloud{
-  padding:70px 10px 20px;
-}*/
 .center-wrap{
   width: 94%;
 }
@@ -26,29 +19,12 @@
   height:391px;
 }
 </style>
-<!-- {/literal}
-{insert_scripts files="../js/utils.js,validator.js,../js/transport.js"} -->
 <script language="JavaScript">
 <!--
 // 这里把JS用到的所有语言都赋值到这里
-// {foreach from=$lang.js_languages key=key item=item}
-// var {$key} = "{$item}";
-// {/foreach}
-// {literal}
 // if (window.parent != window) {
 //   window.top.location.href = location.href;
 // }
-/*关闭按钮*/
-// function get_certificate(){
-//     var panel = document.getElementById('panelCloud');
-//     var mask  = document.getElementById('CMask')||null;
-//     var frame = document.getElementById('CFrame');
-//     if(panel&&CMask&&frame){
-//         panel.style.display = 'block';
-//         mask.style.display = 'block';
-//         frame.src = '{$activate_iframe_url}';
-//       }
-//   }
 
 //   /*关闭按钮*/
 //   function btnCancel(item){
@@ -63,20 +39,14 @@
 </script>
 </head>
 <body style="height: 100%;padding: 0">
-<div class="form-header">
-  <div class="logo"></div>
-</div>
 <form class="login-body" method="post" action="privilege.php" name='theForm' onsubmit="return validate()">
   <div class="center-wrap" id="centerWrap">
-    <!-- <div class="top-ibg-wrap">
-      <a style="background: url({$yunqi_ad_link}) no-repeat center;" href="{$yunqi_ad_url}" target="_blank" class="top-ibg-480600"></a>
-    </div> -->
     <div class="z-bd">
     <!-- <div class="message">{$login_err}</div> -->
       <div class="login-panel" id="loginPanel">
-       <h3 class="logo-text ecshop-logo">
+        <h3 class="logo-text ecshop-logo">
          <div class="logo"></div>
-       </h3>
+        </h3>
         <div class="controls first">
           <svg class="iconphone" width="20px" height="20px" viewBox="0 0 20 20">
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
@@ -97,22 +67,22 @@
           </svg>
           <input type="password" name="password" placeholder="{$lang.label_password}"/>
         </div>
-        <!-- {if $gd_version > 0} -->
-          <div class="controls third">
-            <svg class="iconphone" width="20px" height="20px" viewBox="0 0 20 20">
-              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-                <g id="2-copy-2" sketch:type="MSArtboardGroup" transform="translate(-505.000000, -457.000000)" fill="#666">
-                  <path d="M514.992364,462.720402 C514.752337,462.720402 514.558125,462.879933 514.558125,463.077076 L514.558125,468.784241 C514.558125,468.981384 514.752337,469.140915 514.992364,469.140915 C515.232364,469.140915 515.426576,468.981384 515.426576,468.784241 L515.426576,463.077076 C515.426576,462.879933 515.232364,462.720402 514.992364,462.720402 L514.992364,462.720402 Z M524.979837,460.500513 C524.421168,460.552589 523.839891,460.580179 523.242853,460.580179 C519.219511,460.580179 515.906875,459.331741 515.474864,457.726607 L515.426603,457.726607 L515.426603,457.369955 C515.426603,457.173147 515.232391,457.013259 514.992391,457.013259 C514.752364,457.013259 514.558152,457.17317 514.558152,457.369955 L514.558152,457.726629 L514.509891,457.726629 C514.077853,459.331763 510.76519,460.580201 506.741821,460.580201 C506.14481,460.580201 505.563533,460.552589 505.004891,460.500536 L505.004891,461.214799 C505.015217,461.215737 505.025462,461.216808 505.035815,461.217746 C505.015408,461.592723 505.004891,461.974732 505.004891,462.363705 C505.004891,470.440558 509.476196,476.988237 514.992391,476.988237 C520.50856,476.988237 524.979864,470.440558 524.979864,462.363705 C524.979864,461.974732 524.969321,461.592723 524.948913,461.217746 C524.959266,461.216808 524.969511,461.215759 524.979864,461.214799 L524.979864,460.500513 L524.979837,460.500513 Z M514.992364,476.274866 C509.956196,476.274866 505.873315,470.046652 505.873315,462.363705 C505.873315,461.994085 505.882962,461.631317 505.901576,461.27529 C506.178125,461.287299 506.458315,461.293638 506.741793,461.293638 C510.588886,461.293638 513.851549,460.163281 514.992364,458.597634 C516.133152,460.163281 519.395842,461.293638 523.242853,461.293638 C523.526386,461.293638 523.806576,461.287299 524.083125,461.27529 C524.101739,461.631317 524.111386,461.994107 524.111386,462.363705 C524.111386,470.046629 520.028533,476.274866 514.992364,476.274866 L514.992364,476.274866 Z M514.992364,469.85433 C514.752337,469.85433 514.558125,470.014196 514.558125,470.211004 L514.558125,470.924375 C514.558125,471.121518 514.752337,471.281094 514.992364,471.281094 C515.232364,471.281094 515.426576,471.121518 515.426576,470.924375 L515.426576,470.211004 C515.426576,470.014196 515.232364,469.85433 514.992364,469.85433 L514.992364,469.85433 Z" id="code" sketch:type="MSShapeGroup"></path>
-                </g>
+        <?php if ($gd_ver > 0): ?>
+        <div class="controls third">
+          <svg class="iconphone" width="20px" height="20px" viewBox="0 0 20 20">
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+              <g id="2-copy-2" sketch:type="MSArtboardGroup" transform="translate(-505.000000, -457.000000)" fill="#666">
+                <path d="M514.992364,462.720402 C514.752337,462.720402 514.558125,462.879933 514.558125,463.077076 L514.558125,468.784241 C514.558125,468.981384 514.752337,469.140915 514.992364,469.140915 C515.232364,469.140915 515.426576,468.981384 515.426576,468.784241 L515.426576,463.077076 C515.426576,462.879933 515.232364,462.720402 514.992364,462.720402 L514.992364,462.720402 Z M524.979837,460.500513 C524.421168,460.552589 523.839891,460.580179 523.242853,460.580179 C519.219511,460.580179 515.906875,459.331741 515.474864,457.726607 L515.426603,457.726607 L515.426603,457.369955 C515.426603,457.173147 515.232391,457.013259 514.992391,457.013259 C514.752364,457.013259 514.558152,457.17317 514.558152,457.369955 L514.558152,457.726629 L514.509891,457.726629 C514.077853,459.331763 510.76519,460.580201 506.741821,460.580201 C506.14481,460.580201 505.563533,460.552589 505.004891,460.500536 L505.004891,461.214799 C505.015217,461.215737 505.025462,461.216808 505.035815,461.217746 C505.015408,461.592723 505.004891,461.974732 505.004891,462.363705 C505.004891,470.440558 509.476196,476.988237 514.992391,476.988237 C520.50856,476.988237 524.979864,470.440558 524.979864,462.363705 C524.979864,461.974732 524.969321,461.592723 524.948913,461.217746 C524.959266,461.216808 524.969511,461.215759 524.979864,461.214799 L524.979864,460.500513 L524.979837,460.500513 Z M514.992364,476.274866 C509.956196,476.274866 505.873315,470.046652 505.873315,462.363705 C505.873315,461.994085 505.882962,461.631317 505.901576,461.27529 C506.178125,461.287299 506.458315,461.293638 506.741793,461.293638 C510.588886,461.293638 513.851549,460.163281 514.992364,458.597634 C516.133152,460.163281 519.395842,461.293638 523.242853,461.293638 C523.526386,461.293638 523.806576,461.287299 524.083125,461.27529 C524.101739,461.631317 524.111386,461.994107 524.111386,462.363705 C524.111386,470.046629 520.028533,476.274866 514.992364,476.274866 L514.992364,476.274866 Z M514.992364,469.85433 C514.752337,469.85433 514.558125,470.014196 514.558125,470.211004 L514.558125,470.924375 C514.558125,471.121518 514.752337,471.281094 514.992364,471.281094 C515.232364,471.281094 515.426576,471.121518 515.426576,470.924375 L515.426576,470.211004 C515.426576,470.014196 515.232364,469.85433 514.992364,469.85433 L514.992364,469.85433 Z" id="code" sketch:type="MSShapeGroup"></path>
               </g>
-            </svg>
-            <input type="text" name="no-captcha" class="capital" placeholder="{$lang.label_captcha}" />
-            <!--<input name="captchas" type="text" data-error-msg="验证码不能为空" class="Inp-v" placeholder="输入验证码"><i class="Ico"></i>-->
-            <!-- <div class="" style="position: absolute; right: 8px; top: 8px;" id="number_div">
-              <img src="index.php?act=captcha&{$random}" width="102" height="34" alt="CAPTCHA" border="1" onclick= this.src="index.php?act=captcha&"+Math.random() style="cursor: pointer;" title="{$lang.click_for_another}" /> -->
-            </div>
+            </g>
+          </svg>
+          <input type="text" name="no-captcha" class="capital" placeholder="{$lang.label_captcha}" />
+          <!-- <input name="captchas" type="text" data-error-msg="验证码不能为空" class="Inp-v" placeholder="输入验证码"><i class="Ico"></i> -->
+          <div class="" style="position: absolute; right: 8px; top: 8px;" id="number_div">
+            <img src="/common/verify" width="102" height="34" alt="CAPTCHA" border="1" onclick="this.src='/common/verify?'+Math.random()" style="cursor: pointer;" title="{$lang.click_for_another}" />
           </div>
-        <!-- {/if} -->
+        </div>
+        <?php endif; ?>
         <div class="controls last">
           <input type="submit" class="btn-a" value="{$lang.signin_now}" class="button" />
           <span style="display: none" id="login_error_msg"></span>
@@ -138,27 +108,24 @@
 <!-- <div class="copy-right">&copy; 2003-{$now_year} ShopEx,Inc.All rights reserved.</div> -->
 <script language="JavaScript">
 
- //三次密码输入错误,出现验证码(火狐触发不了,不过影响不大)
- (function(win,doc){
-   if(!doc.getCookie('loginNum')){
-     doc.setCookie('loginNum','1',1);
-   }else{
-     doc.setCookie('loginNum',doc.getCookie('loginNum')*1+1,1);
-   }
-   if(doc.getCookie('loginNum')>3){
-     var oInput=doc.getElementsByClassName('capital')[0];
-     var oT=doc.getElementsByClassName('third')[0];
-     if(oT){
+// 三次密码输入错误,出现验证码
+(function () {
+  var loginNum = parseInt(getCookie('loginNum'));
+  if (loginNum > 3) {
+    var oInput=document.getElementsByClassName('capital')[0];
+    var oT=document.getElementsByClassName('third')[0];
+    if (oT) {
       oT.classList.add('active');
       oT.previousElementSibling.classList.add('active');
       oInput.name='captcha';
-     }
-   }
- })(window,document);
+    }
+  } else {
+    setCookie('loginNum', loginNum ? loginNum+1 : '1');
+  }
+})();
 
-<!--
-  document.forms['theForm'].elements['username'].focus();
-  {literal}
+document.forms['theForm'].elements['username'].focus();
+
   /**
    * 检查表单输入的内容
    */
@@ -171,33 +138,33 @@
     }
     return validator.passed();
   }
-  {/literal}
 
 
-  var dom ="<h3 class='logo-text yunqi-logo'><div class='logo'></div><p class='text'>云起登录</p></h3><div class='main'><span class='error-hint' {if !$error_msg } style='display:none' {/if} id='login_error_msg'>{$error_msg}</span><iframe id='loginFrame' src='{$iframe_url}' height='220' frameborder='0' scrolling='no'></iframe><div class='cloud-passw'><a target='_blank' href='https://account.shopex.cn/forget?' style='float:right;'>{$lang.forget_pwd}</a></div> </div>";
-  var cloudLogin = document.getElementById('cloudLogin');
-  var elsePanel = document.getElementById('elseLogin');
-  var loginPanel = document.getElementById('loginPanel');
-  var oldLogin  = loginPanel.innerHTML;
-  var oldElseTxt = elsePanel.getElementsByTagName('p')[0].innerHTML;
 
-  cloudLogin.onclick = function(){
-    loginTab();
-  }
-  function loginTab(){
-    if(JSON.stringify(elsePanel.classList).indexOf('ecshop')<0){
-       loginPanel.classList.add('cloud');
-      elsePanel.classList.add('ecshop');
-      loginPanel.innerHTML= dom;
-      elsePanel.getElementsByTagName('p')[0].innerHTML = '{$lang.ecshop_account}';
-      get_certificate();
-    }else{
-      loginPanel.classList.remove('cloud');
-      elsePanel.classList.remove('ecshop');
-      loginPanel.innerHTML= oldLogin;
-      elsePanel.getElementsByTagName('p')[0].innerHTML = oldElseTxt;
-    }
-  }
+  // var dom ="<h3 class='logo-text yunqi-logo'><div class='logo'></div><p class='text'>云起登录</p></h3><div class='main'><span class='error-hint' {if !$error_msg } style='display:none' {/if} id='login_error_msg'></span><iframe id='loginFrame' src='' height='220' frameborder='0' scrolling='no'></iframe><div class='cloud-passw'><a target='_blank' href='https://account.shopex.cn/forget?' style='float:right;'>{$lang.forget_pwd}</a></div> </div>";
+  // var cloudLogin = document.getElementById('cloudLogin');
+  // var elsePanel = document.getElementById('elseLogin');
+  // var loginPanel = document.getElementById('loginPanel');
+  // var oldLogin  = loginPanel.innerHTML;
+  // var oldElseTxt = elsePanel.getElementsByTagName('p')[0].innerHTML;
+
+  // cloudLogin.onclick = function(){
+  //   loginTab();
+  // }
+  // function loginTab(){
+  //   if(JSON.stringify(elsePanel.classList).indexOf('ecshop')<0){
+  //      loginPanel.classList.add('cloud');
+  //     elsePanel.classList.add('ecshop');
+  //     loginPanel.innerHTML= dom;
+  //     elsePanel.getElementsByTagName('p')[0].innerHTML = '';
+  //     get_certificate();
+  //   }else{
+  //     loginPanel.classList.remove('cloud');
+  //     elsePanel.classList.remove('ecshop');
+  //     loginPanel.innerHTML= oldLogin;
+  //     elsePanel.getElementsByTagName('p')[0].innerHTML = oldElseTxt;
+  //   }
+  // }
   
 </script>
 </body>

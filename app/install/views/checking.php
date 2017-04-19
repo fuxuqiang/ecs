@@ -14,7 +14,7 @@
   </div>
 </body>
 <script type="text/javascript" src="/js/ajax.js"></script>
-<script type="text/javascript" src="/js/select_lang.js"></script>
+<script type="text/javascript" src="/js/install/select_lang.js"></script>
 <script type="text/javascript">
   function check() {
     Ajax.get('/install/checked', {lang: '<?= lang() ?>'}, function (content) {

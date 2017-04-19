@@ -1,9 +1,9 @@
 <?php
 
 namespace app\admin;
-use app\Common;
+use app\common\Init;
 
-class Index extends Common
+class Index extends Init
 {
 	public function __construct()
 	{

@@ -20,5 +20,5 @@
     </div>
   </form>
 </body>
-<script type="text/javascript" src="/js/select_lang.js"></script>
+<script type="text/javascript" src="/js/install/select_lang.js"></script>
 @endsection

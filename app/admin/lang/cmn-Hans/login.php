@@ -9,4 +9,5 @@ return [
 	'remember' => '自动登录',
 	'forget_pwd' => '忘记密码?',
 	'back_home' => '去店铺首页>>',
+	'click_for_another' => '看不清？点击更换另一个验证码。',
 ];

@@ -1,5 +1,9 @@
 <?php
 
+// 要求PHP版本5.4以上
+if(version_compare(PHP_VERSION, '5.4') < 0)
+	die('require PHP >= 5.4 !');
+
 // 取得当前ecs所在的根目录
 define('ROOT_PATH', strtr(dirname(__DIR__), '\\', '/').'/');
 

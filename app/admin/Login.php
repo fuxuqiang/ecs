@@ -1,11 +1,12 @@
 <?php
 
 namespace app\admin;
+use app\common\Init;
 
-class Login
+class Login extends Init
 {
 	public function index()
 	{
-		view('login', ['lang'=>lang_var('login')]);
+		view('login', ['lang'=>lang_var('login'), 'gd_ver'=>gd_info()['GD Version']]);
 	}
 }

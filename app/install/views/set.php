@@ -124,9 +124,9 @@
   </div>
 </body>
 <script type="text/javascript" src="/js/ajax.js"></script>
-<script type="text/javascript" src="/js/select_lang.js"></script>
+<script type="text/javascript" src="/js/install/select_lang.js"></script>
 <script type="text/javascript" src="/js/drag.js"></script>
-<script type="text/javascript" src="/js/set.js"></script>
+<script type="text/javascript" src="/js/install/set.js"></script>
 <script type="text/javascript">
   var form = document.getElementsByTagName('form')[0],
       dbName = form['db-name'],

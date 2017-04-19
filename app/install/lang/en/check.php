@@ -13,4 +13,5 @@ return [
 	'can_write' => 'Writable',
 	'cannt_write' => 'Not writable',
 	'not_exists' => 'Not exists',
+	'not_support' => 'No support',
 ];

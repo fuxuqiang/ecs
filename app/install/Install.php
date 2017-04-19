@@ -27,12 +27,12 @@ class Install
 	// 输出检测结果
 	public function checked()
 	{
+		$disabled = '';
 		// 获取语言变量
 		$lang = lang_var('check', true);
 		// 获取GD的版本号
-		$gd_ver = gd_info()['GD Version'];
+		$gd_ver = gd_info()['GD Version'] ?: $lang['not_support'];
 		// 检查目录权限
-		$disabled = '';
 		$dirs = ['temp/compile', 'config'];
 		foreach ($dirs as $key => $dir) {
 			$dirCheck[$key]['dir'] = $dir;
@@ -43,11 +43,11 @@ class Install
 			// 不可写
 			} elseif (is_dir($path)) {
 				$dirCheck[$key]['rst'] = $lang['cannt_write'];
-				$disabled = 'disabled="true"';
+				$disabled = 'disabled';
 			// 不存在
 			} else {
 				$dirCheck[$key]['rst'] = $lang['not_exists'];
-				$disabled = 'disabled="true"';
+				$disabled = 'disabled';
 			}
 		}
 		// 显示视图

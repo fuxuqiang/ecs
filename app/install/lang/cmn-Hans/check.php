@@ -13,4 +13,5 @@ return [
 	'can_write' => '可写',
 	'cannt_write' => '不可写',
 	'not_exists' => '不存在',
+	'not_support' => '不支持',
 ];

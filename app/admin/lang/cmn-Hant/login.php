@@ -9,4 +9,5 @@ return [
 	'remember' => '請保存我這次的登錄信息。',
 	'forget_pwd' => '您忘記了密碼嗎?',
 	'back_home' => '返回首頁',
+	'click_for_another' => '看不清？點擊更換另一個驗證碼。',
 ];

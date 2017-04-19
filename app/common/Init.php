@@ -1,9 +1,9 @@
 <?php
 
-namespace app;
+namespace app\common;
 use \includes\classes\Cache;
 
-abstract class Common
+abstract class Init
 {
 	public function __construct()
 	{
