@@ -7,9 +7,9 @@ class Install
 {
 	public function __construct()
 	{
-		// if (is_file(ROOT_PATH.'config/install.lock') && App::dispatch()['action'] != 'done') {
-		// 	view('error', ['lang' => lang_var('error')], true);
-		// }
+		if (is_file(ROOT_PATH.'config/install.lock') && App::dispatch()['action'] != 'done') {
+			view('error', ['lang' => lang_var('error')], true);
+		}
 	}
 
 	// 首页
@@ -51,7 +51,7 @@ class Install
 			}
 		}
 		// 显示视图
-		view('checked', compact('gd_ver', 'dirCheck', 'lang', 'disabled'), false);
+		view('checked', compact('gd_ver', 'dirCheck', 'lang', 'disabled'), true);
 	}
 
 	// 配置页
