@@ -42,8 +42,8 @@ class Template
 				trigger_error('Can\'t find @section tag in ('.$tplFile.')', E_USER_ERROR);
 			}
 		}
-		// 解析模板变量输出
-		$content = $this->parseEcho($content);
+		// 解析php标签组
+		$content = $this->parseTags($content);
 		// 导入变量
 		extract($var);
 		// 打开输出缓冲
@@ -63,15 +63,21 @@ class Template
 	}
 
 	/**
-	 * 解析模板变量输出
+	 * 解析php标签组
 	 *
 	 * @param $string $content
 	 *
 	 * @return $string
 	 */
-	private function parseEcho($content)
+	private function parseTags($content)
 	{
-		$content = preg_replace_callback('~{(\$(?>[^{}]+))}~', function($matches){
+		// 解析if、elseif、foreach标签
+		$content = preg_replace('~@((if|elseif|foreach)\(.*?\))~', '<?php $1: ?>', $content);
+		$content = preg_replace('~@end(if|foreach)~', '<?php end$1; ?>', $content);
+		// 解析else标签
+		$content = str_replace('@else', '<?php else: ?>', $content);
+		// 解析模板变量输出，并返回
+		return preg_replace_callback('~{(\$(?>[^{}]+))}~', function($matches){
 			if (strpos($matches[1], '.') === false) {
 				$var = $matches[1];
 			} else {
@@ -83,7 +89,6 @@ class Template
 			}
 			return '<?='.$var.'?>';
 		}, $content);
-		return $content;
 	}
 
 	/**

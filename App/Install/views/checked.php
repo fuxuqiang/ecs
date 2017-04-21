@@ -10,16 +10,16 @@
         </div>
         <h3>{$lang.dir_priv_checking}</h3>
         <div class="list">
-        <?php foreach ($dirCheck as $value): ?>
+        @foreach($dirCheck as $value)
           {$value.dir}.......................................................................................................................
-          <?php if($value['rst'] == $lang['can_write']):?>
+          @if($value['rst'] == $lang['can_write'])
             <span style="color:green;">
-          <?php else:?>
+          @else
             <span style="color:red;">
-          <?php endif;?>
+          @endif
               {$value.rst}
             </span><br />
-        <?php endforeach; ?>
+        @endforeach
         </div>
       </div>
     </td>
