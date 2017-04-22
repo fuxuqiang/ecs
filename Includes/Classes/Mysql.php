@@ -8,44 +8,26 @@ namespace Includes\Classes;
 final class Mysql
 {
     /**
-     * 查询次数
-     *
-     * @param int
+     * @var int $queryCount 查询次数
      */
     public $queryCount = 0;
 
     /**
-     * 当前类的对象
-     *
-     * @param static
+     * @var static $instance 当前类的对象
      */
     private static $instance;
 
     /**
-     * 表前缀
-     *
-     * @param string
+     * @var string $prefix 表前缀
+     * @var stirng $table 表名
+     * @var PDO    $linkID PDO实例
      */
-    private $prefix;
-
-    /**
-     * 表名
-     *
-     * @param string
-     */
-    private $table;
-
-    /**
-     * PDO实例
-     *
-     * @param PDO
-     */
-    private $linkID;
+    private $prefix, $table, $linkID;
 
     /**
      * 获取当前类的对象
      *
-     * @param $array
+     * @param array
      *
      * @return static
      */
@@ -58,7 +40,7 @@ final class Mysql
     }
 
     /**
-     * 
+     * 构造函数
      *
      * @param array
      *
@@ -77,11 +59,26 @@ final class Mysql
         }
     }
 
+    /**
+     * 设置表名
+     *
+     * @param string
+     *
+     * @return void
+     */
     public function table($name)
     {
         $this->table = $this->prefix.$name;
     }
 
+    /**
+     * 执行查询
+     *
+     * @param string $sql
+     * @param array  $data
+     *
+     * @return PDOStatement
+     */
     public function query($sql, array $data=[])
     {
         $sth = $this->linkID->prepare($sql);
@@ -90,6 +87,9 @@ final class Mysql
         return $sth;
     }
 
+    /**
+     * 
+     */
     public function insert(array $data)
     {
         $sql = 'INSERT `'.$this->table.'` SET ';
