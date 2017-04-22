@@ -134,5 +134,5 @@ function view($filename, $var, $direct_output=false)
     if ($direct_output) {
         $template->directOutput = true;
     }
-    exit($template->fetch($filename, $var));
+    $template->display($filename, $var);
 }

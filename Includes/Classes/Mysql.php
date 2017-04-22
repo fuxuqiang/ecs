@@ -7,22 +7,63 @@ namespace Includes\Classes;
  */
 final class Mysql
 {
+    /**
+     * 查询次数
+     *
+     * @param int
+     */
+    public $queryCount = 0;
+
+    /**
+     * 当前类的对象
+     *
+     * @param static
+     */
     private static $instance;
 
+    /**
+     * 表前缀
+     *
+     * @param string
+     */
     private $prefix;
 
+    /**
+     * 表名
+     *
+     * @param string
+     */
     private $table;
 
+    /**
+     * PDO实例
+     *
+     * @param PDO
+     */
     private $linkID;
 
+    /**
+     * 获取当前类的对象
+     *
+     * @param $array
+     *
+     * @return static
+     */
     public static function getInstance(array $settings)
     {
-        if (self::$instance === null) {
-            self::$instance = new self($settings);
+        if (static::$instance === null) {
+            static::$instance = new static($settings);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
+    /**
+     * 
+     *
+     * @param array
+     *
+     * @return void
+     */
     private function __construct($settings)
     {
         // 处理配置参数
@@ -45,6 +86,7 @@ final class Mysql
     {
         $sth = $this->linkID->prepare($sql);
         $sth->execute($data);
+        $this->queryCount++;
         return $sth;
     }
 

@@ -1,3 +1,3 @@
 <?php
 
-function sys_msg($msg, )
+// function sys_msg($msg, )

@@ -13,19 +13,46 @@ class Template
 
 	public $directOutput = false;
 
+	private $content;
+
+	private $view;
+
 	/**
-	 * 获取显示内容
+	 * 显示页面
 	 *
 	 * @param string $filename
 	 * @param array $var
 	 *
 	 * @return string
 	 */
-	public function fetch($filename, $var = [])
+	public function display($filename, $var = [])
+	{
+		$this->fetch($filename);
+		// 导入变量
+		extract($var);
+		// 是否生成编译文件
+		if ($this->directOutput) {
+			eval('?>'.$this->content);
+		} else {
+			$this->view = $this->compileDir.md5($this->tplFile).'.php';
+			file_put_contents($this->view, $this->content);
+			require $this->view;
+		}
+		exit;
+	}
+
+	/**
+	 * 获取显示内容
+	 *
+	 * @param string $filename
+	 *
+	 * @return void
+	 */
+	private function fetch($filename)
 	{
 		// 获取模板内容
-		$tplFile = $this->getTemplatePath($filename);
-		$content = $this->getContent($tplFile);
+		$this->tplFile = $this->getTemplatePath($filename);
+		$content = $this->getContent($this->tplFile);
 		// 解析include标签
 		$content = $this->parseInclude($content);
 		// 是否继承
@@ -39,27 +66,11 @@ class Template
 					return isset($content[$matches[1]])? $content[$matches[1]]:'';
 				}, $parentContent);
 			} else {
-				trigger_error('Can\'t find @section tag in ('.$tplFile.')', E_USER_ERROR);
+				trigger_error('Can\'t find @section tag in ('.$this->tplFile.')', E_USER_ERROR);
 			}
 		}
 		// 解析php标签组
-		$content = $this->parseTags($content);
-		// 导入变量
-		extract($var);
-		// 打开输出缓冲
-		ob_start();
-		// 是否生成编译文件
-		if ($this->directOutput) {
-			eval('?>'.$content);
-		} else {
-			$view = $this->compileDir.md5($tplFile).'.php';
-			file_put_contents($view, $content);
-			require $view;
-		}
-		// 返回输出内容
-	    $out = ob_get_contents();
-	    ob_end_clean();
-	    return $out;
+		$this->content = $this->parseTags($content);
 	}
 
 	/**

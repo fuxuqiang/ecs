@@ -91,4 +91,9 @@ function redirection()
 //-->
 </script>
 @endif
-{include file="pagefooter.htm"}
+<div id="footer">
+{$query_info}{$gzip_enabled}{$memory_info}<br />
+{$lang.copyright}
+</div>
+</body>
+</html>

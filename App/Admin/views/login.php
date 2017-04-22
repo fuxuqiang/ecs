@@ -9,7 +9,6 @@
 <form class="login-body" method="post">
   <div class="center-wrap" id="centerWrap">
     <div class="z-bd">
-    <!-- <div class="message">{$login_err}</div> -->
       <div class="login-panel" id="loginPanel">
         <h3 class="logo-text ecshop-logo">
          <div class="logo"></div>
