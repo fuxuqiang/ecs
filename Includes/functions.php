@@ -2,6 +2,7 @@
 
 use Includes\App;
 use Includes\Config;
+use Includes\Classes\Mysql;
 
 /**
  * 获取配置
@@ -34,7 +35,7 @@ function db($name = false)
         $settings['debug'] = config('debug');
         $settings['charset'] = config('charset');
     }
-    $db = \includes\classes\Mysql::getInstance($settings);
+    $db = Mysql::getInstance($settings);
     if ($name) {
         $db->table($name);
     }

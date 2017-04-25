@@ -10,4 +10,5 @@ return [
 	'forget_pwd' => '您忘記了密碼嗎?',
 	'back_home' => '返回首頁',
 	'click_for_another' => '看不清？點擊更換另一個驗證碼。',
+	'captcha_error' => '您輸入的驗證碼不正確。',
 ];

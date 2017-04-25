@@ -19,6 +19,7 @@ class Captcha
 			$code.=$char[$v];
 		}
 		// 赋值给SESSION
+		session_start();
 		$_SESSION['captcha'] = strtolower($code);
 		// 生成画布并设置背景色
 		$img = imagecreatetruecolor($imgW, $imgH);

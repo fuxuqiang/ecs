@@ -8,9 +8,10 @@ namespace Includes\Classes;
 final class Mysql
 {
     /**
-     * @var int $queryCount 查询次数
+     * @var float $quryTime 查询开始时间
+     * @var int   $queryCount 查询次数
      */
-    public $queryCount = 0;
+    public $queryTime = 0, $queryCount = 0;
 
     /**
      * @var static $instance 当前类的对象
@@ -18,11 +19,10 @@ final class Mysql
     private static $instance;
 
     /**
-     * @var string $prefix 表前缀
-     * @var stirng $table 表名
+     * @var array  $setting 数据库连接配置
      * @var PDO    $linkID PDO实例
      */
-    private $prefix, $table, $linkID;
+    private $settings, $linkID;
 
     /**
      * 获取当前类的对象
@@ -48,13 +48,22 @@ final class Mysql
      */
     private function __construct($settings)
     {
-        // 处理配置参数
-        $this->prefix = $settings['prefix'];
-        $settings['charset'] = str_replace('-', '', $settings['charset']);
+        $this->settings = $settings;
+        $this->settings['prefix'] = $settings['prefix'];
+        $this->settings['charset'] = str_replace('-', '', $settings['charset']);        
+    }
+
+    /**
+     * 连接数据库
+     *
+     * @return void
+     */
+    private function connect()
+    {
         // 连接数据库
-        $this->linkID = new \PDO('mysql:host='.$settings['host'].';dbname='.$settings['name'].';charset='.$settings['charset'], $settings['user'], $settings['pass']);
+        $this->linkID = new \PDO('mysql:host='.$this->settings['host'].';dbname='.$this->settings['name'].';charset='.$this->settings['charset'], $this->settings['user'], $this->settings['pass']);
         // 设置sql_mode
-        if (!$settings['debug']) {
+        if (!$this->settings['debug']) {
             $this->linkID->query("SET sql_mode=''");
         }
     }
@@ -81,14 +90,26 @@ final class Mysql
      */
     public function query($sql, array $data=[])
     {
+        if ($this->linkID === null) {
+            $this->connect();
+        }
+        // 记录查询开始时间
+        $this->queryTime = microtime(true);
+        // 执行查询
         $sth = $this->linkID->prepare($sql);
         $sth->execute($data);
+        // 查询次数
         $this->queryCount++;
+        
         return $sth;
     }
 
     /**
-     * 
+     * 插入数据
+     *
+     * @param array $data
+     *
+     * @return PDOStatement
      */
     public function insert(array $data)
     {
@@ -100,13 +121,18 @@ final class Mysql
         return $this->query($sql, array_values($data));
     }
 
+    /**
+     * 查询全部数据
+     *
+     * @return array
+     */
     public function fetchAll()
     {
         $sql = 'SELECT * FROM `'.$this->table.'`';
         return $this->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    // prevent a secend instance of it
     private function __clone() {}
-
     private function __wakeup() {}
 }

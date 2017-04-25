@@ -2,7 +2,8 @@
 <head>
   <meta charset="utf-8">
   <title>{$lang.cp_home}</title>
-  <link href="/css/admin/general.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="/css/admin/general.css">
+  <link rel="stylesheet" type="text/css" href="/css/admin/login.css">
   <script type="text/javascript" src="/js/utility.js"></script>
 </head>
 <body style="height: 100%;padding: 0">

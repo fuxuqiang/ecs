@@ -1,0 +1,47 @@
+.list-div {
+  width: 100%;
+  padding: 0 ;
+}
+.list-div table {
+  width: 100%;
+  border: 1px solid #e8e8e8;
+}
+.list-div td {
+  background: #f4fafb;
+  line-height: 22px;
+  text-align: center;
+  border-right: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+}
+.list-div.message{
+  border: 1px solid #BBDDE5;
+}
+.list-div.message table{
+  border: none;
+}
+.list-div.message td{
+  background: none;
+  border: none;
+  text-align: left;
+}
+.list-div.message div {
+	background: #FFF; 
+	padding: 20px 50px; 
+	margin: 2px;
+}
+.list-div a:visited, .list-div a:link {
+  color: #4face5;
+}
+.list-div a:hover {
+  color: #9D7250;
+}
+
+ul.msg-link {
+  list-style-type: none;
+}
+
+ul.msg-link li {
+  background: url(/img/admin/arrow.gif) no-repeat 0px 6px;
+  padding-left:   18px;
+  margin-left:  0;
+}

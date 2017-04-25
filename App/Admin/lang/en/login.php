@@ -10,4 +10,5 @@ return [
 	'forget_pwd' => 'Do you forget password?',
 	'back_home' => 'Return to HOME',
 	'click_for_another' => 'Invisibility? Replace an image.'
+	'captcha_error' => 'Your verification code is invalid.',
 ];

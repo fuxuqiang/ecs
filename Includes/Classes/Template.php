@@ -83,7 +83,7 @@ class Template
 	private function parseTags($content)
 	{
 		// 解析if、elseif、foreach标签
-		$content = preg_replace('~@((if|elseif|foreach)\(.*?\))~', '<?php $1: ?>', $content);
+		$content = preg_replace('~@((if|elseif|foreach)(\(((?>[^()]+)|(?3))*\)))~', '<?php $1: ?>', $content);
 		$content = preg_replace('~@end(if|foreach)~', '<?php end$1; ?>', $content);
 		// 解析else标签
 		$content = str_replace('@else', '<?php else: ?>', $content);
