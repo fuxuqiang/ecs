@@ -78,7 +78,7 @@ class Install
 	// 创建配置文件
 	public function createConfFile($host, $port, $user, $pass, $name, $prefix, $timezone)
 	{
-		$content = file_get_contents(module_path('data/config.tpl'));
+		$content = file_get_contents(ROOT_PATH.'config/config.php');
 		$pairs = ['[host]'=>$host, '[port]'=>$port, '[user]'=>$user, '[pass]'=>$pass, '[name]'=>$name, '[prefix]'=>$prefix, '[timezone]'=>$timezone];
 		$content = strtr($content, $pairs);
 		if (@file_put_contents(ROOT_PATH.'config/config.php', $content)) {

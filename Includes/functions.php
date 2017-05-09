@@ -43,6 +43,19 @@ function db($name = false)
 }
 
 /**
+ * 获取变量值，不存在则返回默认值
+ *
+ * @param mixed $var
+ * @param mixed $default
+ *
+ * @return mixed
+ */
+function get(&$var, $default)
+{
+    return isset($var) ? $var : $default;
+}
+
+/**
  * 获取当前选择语言
  *
  * @return string
@@ -100,7 +113,7 @@ function module_path($path = '')
 {
     static $module_path;
     if ($module_path === null) {
-        $module_path = ROOT_PATH.'App/'.App::dispatch()['module'].'/';
+        $module_path = ROOT_PATH.'App/'.App::$dispatch['module'].'/';
     }
     return $module_path.$path;
 }

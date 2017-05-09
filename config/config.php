@@ -14,12 +14,18 @@ return [
 		'prefix' => '[prefix]'
 	],
 
-	'charset' => 'utf-8',
+	'charset'  => 'utf-8',
 
 	'timezone' => '[timezone]',
 
 	// 缓存配置
-	'cache_on'   => true,
-	'cache_path' => 'temp/static_caches/'
+	'cache' => [
+		'on'   => true,
+		'path' => 'temp/static_caches'
+	],
 
+	// 路由配置
+	'route' => [
+		'install' => 'Install/Install',
+	]
 ];

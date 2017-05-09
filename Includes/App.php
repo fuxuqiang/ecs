@@ -4,16 +4,33 @@ namespace Includes;
 
 class App
 {
+	public static $dispatch = [];
+
 	public static function start()
 	{
 		// 解析URL
-		$dispatch = self::dispatch();
+		if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO']!='/') {
+			$pathInfo = trim($_SERVER['PATH_INFO'], '/');
+			// 获取路由配置
+			if (config('route')) {
+				foreach (config('route') as $key => $value) {
+					if (strpos($pathInfo, $key) === 0) {
+						$pathInfo = str_replace($key, $value, $pathInfo);
+					}
+				}
+			}
+		    $paths = explode('/', $pathInfo);
+		}
+		$dispatch = &self::$dispatch;
+		$dispatch['module'] = ucfirst(get($paths[0], 'index'));
+		$dispatch['controller'] = ucfirst(get($paths[1], 'index'));
+		$dispatch['action'] = get($paths[2], 'index');
 		// 包含当前模块函数库文件
 		@include ROOT_PATH.'App/'.$dispatch['module'].'/functions.php';
 		// 实例化控制器
-		$class = '\\App\\'.$dispatch['module'].'\\'.$dispatch['class'];
+		$class = '\\App\\'.$dispatch['module'].'\\'.$dispatch['controller'];
 		$controller = new $class;
-		// 绑定参数并当前操作方法
+		// 绑定参数并执行当前操作方法
 		$method = new \ReflectionMethod($controller, $dispatch['action']);
 		if ($method->getNumberOfParameters()) {
 			$params = $method->getParameters();
@@ -26,26 +43,5 @@ class App
 		} else {
 			$method->invoke($controller);
 		}
-	}
-
-	public static function dispatch()
-	{
-		static $dispatch;
-		if ($dispatch === null) {
-			if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO']!='/') {
-			    $paths = explode('/', trim($_SERVER['PATH_INFO'], '/'));
-			}
-			$module = ucfirst(isset($paths[0])? $paths[0] : 'index');
-			// 是否存在与模块同名的类
-			if (is_file(ROOT_PATH.'App/'.$module.'/'.$module.'.php')) {
-				$class = $module;
-				$action = isset($paths[1])? $paths[1] : 'index';
-			} else {
-				$class = ucfirst(isset($paths[1])? $paths[1] : 'index');
-				$action = isset($paths[2])? $paths[2] : 'index';
-			}
-			$dispatch = ['module'=>$module, 'class'=>$class, 'action'=>$action];
-		}
-		return $dispatch;
 	}
 }
