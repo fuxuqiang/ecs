@@ -61,7 +61,11 @@ final class Mysql
     private function connect()
     {
         // 连接数据库
-        $this->linkID = new \PDO('mysql:host='.$this->settings['host'].';dbname='.$this->settings['name'].';charset='.$this->settings['charset'], $this->settings['user'], $this->settings['pass']);
+        $this->linkID = new \PDO(
+            'mysql:host='.$this->settings['host'].';dbname='.$this->settings['name'].';charset='.$this->settings['charset'], 
+            $this->settings['user'], 
+            $this->settings['pass']
+        );
         // 设置sql_mode
         if (!$this->settings['debug']) {
             $this->linkID->query("SET sql_mode=''");

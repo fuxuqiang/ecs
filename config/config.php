@@ -27,5 +27,6 @@ return [
 	// 路由配置
 	'route' => [
 		'install' => 'Install/Install',
+		'shops' => ['Shop']
 	]
 ];

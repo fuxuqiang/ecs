@@ -1,6 +1,6 @@
 <?php
 return [
-	'title' => 'ECShop install program, the 3 step / 3 step, config system',
+	'title' => 'ECS install program, the 3 step / 3 step, config system',
 	'db_account' => 'Database accounts:',
 	'db_port' => 'Port:',
 	'db_host' => 'Database host:',

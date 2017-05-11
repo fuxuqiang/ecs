@@ -25,7 +25,7 @@ function config($name)
  *
  * @param string $name 
  *
- * @return \includes\classes\Mysql
+ * @return \Includes\Classes\Mysql
  */
 function db($name = false)
 {

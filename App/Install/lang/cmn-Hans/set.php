@@ -1,6 +1,6 @@
 <?php
 return [
-	'title' => 'ECShop安装程序 第3步/共3步 配置系统',
+	'title' => 'ECS安装程序 第3步/共3步 配置系统',
 	'db_account' => '数据库帐号',
 	'db_port' => '端口号：',
 	'db_host' => '数据库主机：',

@@ -1,6 +1,6 @@
 <?php
 return [
-	'title' => 'ECShop install program, the 2 step / 3 steps, check enviroment',
+	'title' => 'ECS install program, the 2 step / 3 steps, check enviroment',
 	'loading' => 'Loading,please wait...',
 	'system_environment' => 'System enviroment',
 	'welcome_page' => 'Welcome page',
