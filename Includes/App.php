@@ -46,7 +46,7 @@ class App
 							}
 						}
 						// 根据路由替换PATH_INFO
-						$pathInfo = str_replace($key, $value, $pathInfo);						
+						$pathInfo = preg_replace('/'.$key.'/', $value, $pathInfo, 1);						
 					}
 				}
 			}

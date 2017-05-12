@@ -6,17 +6,17 @@ return [
 
 	// 数据库配置
 	'db' => [
-		'host'	 => '[host]',
-		'port'   => '[port]',
-		'name'   => '[name]',
-		'user'   => '[user]',
-		'pass'   => '[pass]',
-		'prefix' => '[prefix]'
+		'host'	 => 'localhost',
+		'port'   => '3306',
+		'name'   => 'ecs',
+		'user'   => 'root',
+		'pass'   => 'eb',
+		'prefix' => ''
 	],
 
 	'charset'  => 'utf-8',
 
-	'timezone' => '[timezone]',
+	'timezone' => 'Asia/Chongqing',
 
 	// 缓存配置
 	'cache' => [
@@ -27,6 +27,5 @@ return [
 	// 路由配置
 	'route' => [
 		'install' => 'Install/Install',
-		'shops' => ['Shop']
 	]
 ];

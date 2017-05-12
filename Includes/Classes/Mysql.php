@@ -81,7 +81,7 @@ final class Mysql
      */
     public function table($name)
     {
-        $this->table = $this->prefix.$name;
+        $this->table = $this->settings['prefix'].$name;
     }
 
     /**

@@ -7,7 +7,7 @@ class Install
 {
 	public function __construct()
 	{
-		if (is_file(ROOT_PATH.'config/install.lock') && App::dispatch()['action'] != 'done') {
+		if (is_file(ROOT_PATH.'config/install.lock') && App::$dispatch['action'] != 'done') {
 			view('error', ['lang' => lang_var('error')], true);
 		}
 	}
@@ -33,7 +33,7 @@ class Install
 		// 获取GD的版本号
 		$gd_ver = gd_info()['GD Version'] ?: $lang['not_support'];
 		// 检查目录权限
-		$dirs = ['temp/compile', 'config'];
+		$dirs = ['temp/compile', 'config', 'config/config.php'];
 		foreach ($dirs as $key => $dir) {
 			$dirCheck[$key]['dir'] = $dir;
 			$path = ROOT_PATH.$dir;
@@ -78,9 +78,20 @@ class Install
 	// 创建配置文件
 	public function createConfFile($host, $port, $user, $pass, $name, $prefix, $timezone)
 	{
+		// 获取配置文件内容
 		$content = file_get_contents(ROOT_PATH.'config/config.php');
-		$pairs = ['[host]'=>$host, '[port]'=>$port, '[user]'=>$user, '[pass]'=>$pass, '[name]'=>$name, '[prefix]'=>$prefix, '[timezone]'=>$timezone];
+		// 替换
+		$pairs = [
+			'[host]' => $host, 
+			'[port]' => $port, 
+			'[user]' => $user, 
+			'[pass]' => $pass, 
+			'[name]' => $name, 
+			'[prefix]' => $prefix, 
+			'[timezone]' => $timezone
+		];
 		$content = strtr($content, $pairs);
+		// 写入
 		if (@file_put_contents(ROOT_PATH.'config/config.php', $content)) {
 			exit('ok');
 		} else {
