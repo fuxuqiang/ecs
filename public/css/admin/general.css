@@ -6,24 +6,8 @@ body {
   background: #fff;
 }
 
-a:visited {
-  color: #335B64;
-  text-decoration: none;
-}
-
-a:link {
-  color: #335B64;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #EB8A3D;
-  text-decoration: underline;
-}
-
-a:active {
-  color: #EB8A3D;
-  text-decoration: underline;
+td {
+  font: 12px Microsoft Yahei, "sans-serif", "Arial", "Verdana";
 }
 
 h1 {
