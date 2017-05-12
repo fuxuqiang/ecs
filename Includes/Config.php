@@ -9,7 +9,7 @@ class Config
 
 	public static function load(Cache $cache)
 	{
-		if (config('cache_on')) {
+		if (config('cache')['on']) {
 			$data = $cache->read('shop_config');
 			if ($data === false) {
 				self::$data = self::read();

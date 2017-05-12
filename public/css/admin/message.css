@@ -13,6 +13,15 @@
   border-right: 1px solid #e8e8e8;
   border-bottom: 1px solid #e8e8e8;
 }
+.list-div img {
+  vertical-align: middle;
+}
+.list-div a:visited, .list-div a:link {
+  color: #4face5;
+}
+.list-div a:hover {
+  color: #9D7250;
+}
 .list-div.message{
   border: 1px solid #BBDDE5;
 }
@@ -29,12 +38,6 @@
 	padding: 20px 50px; 
 	margin: 2px;
 }
-.list-div a:visited, .list-div a:link {
-  color: #4face5;
-}
-.list-div a:hover {
-  color: #9D7250;
-}
 
 ul.msg-link {
   list-style-type: none;
@@ -42,6 +45,15 @@ ul.msg-link {
 
 ul.msg-link li {
   background: url(/img/admin/arrow.gif) no-repeat 0px 6px;
-  padding-left:   18px;
-  margin-left:  0;
+  padding-left: 18px;
+  margin-left: 0;
+}
+
+#footer {
+  background: #F4FaFb;
+  border: 1px solid #BBDDE5;
+  padding: 15px;
+  color: #9CACAF;
+  margin: 10px 0;
+  text-align: center;
 }

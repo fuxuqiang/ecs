@@ -8,7 +8,7 @@ class Cache
 
 	public function __construct($cachePath)
 	{
-		$this->_cachePath = $cachePath;
+		$this->_cachePath = rtrim($cachePath, '/').'/';
 	}
 
 	/**

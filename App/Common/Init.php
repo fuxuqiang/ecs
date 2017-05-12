@@ -7,7 +7,7 @@ abstract class Init
 {
 	public function __construct()
 	{
-		$cache = new Cache(ROOT_PATH.config('cache_path'));
+		$cache = new Cache(ROOT_PATH.config('cache')['path']);
 		\Includes\Config::load($cache);
 	}
 }

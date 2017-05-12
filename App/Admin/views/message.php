@@ -2,6 +2,7 @@
 <head>
   <meta charset="utf-8">
   <title>{$lang.cp_home} - {$lang.system_message}</title>
+  <link rel="stylesheet" type="text/css" href="/css/common.css">
   <link rel="stylesheet" type="text/css" href="/css/admin/general.css">
   <link rel="stylesheet" type="text/css" href="/css/admin/message.css">
 </head>
@@ -28,7 +29,7 @@
           <img src="/img/admin/confirm.gif" width="32" height="32" border="0" alt="confirm" />
           @endif
         </td>
-        <td style="font-size: 14px; font-weight: bold">{$msg}</td>
+        <td style="font-size: 14px; font-weight: bold;">{$msg}</td>
       </tr>
       <tr>
         <td></td>
