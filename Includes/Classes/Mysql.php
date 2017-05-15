@@ -8,7 +8,7 @@ namespace Includes\Classes;
 final class Mysql
 {
     /**
-     * @var float $quryTime 查询开始时间
+     * @var float $queryTime 查询开始时间
      * @var int   $queryCount 查询次数
      */
     public $queryTime = 0, $queryCount = 0;
@@ -19,15 +19,22 @@ final class Mysql
     private static $instance;
 
     /**
-     * @var array  $setting 数据库连接配置
-     * @var PDO    $linkID PDO实例
+     * @var array $setting 数据库连接配置
+     * @var PDO   $linkID PDO实例
      */
     private $settings, $linkID;
 
     /**
+     * @var array $sql SQL组成
+     */
+    private $sql = [
+        'where' => ''
+    ];
+
+    /**
      * 获取当前类的对象
      *
-     * @param array
+     * @param array $settings
      *
      * @return static
      */
@@ -42,7 +49,7 @@ final class Mysql
     /**
      * 构造函数
      *
-     * @param array
+     * @param array $settings
      *
      * @return void
      */
@@ -75,13 +82,28 @@ final class Mysql
     /**
      * 设置表名
      *
-     * @param string
+     * @param string $name
      *
      * @return void
      */
     public function table($name)
     {
-        $this->table = $this->settings['prefix'].$name;
+        $this->table = '`'.$this->settings['prefix'].$name.'`';
+    }
+
+    /**
+     * 设置WHERE条件
+     *
+     * @param array $where
+     *
+     * @return static
+     */
+    public function where($where)
+    {
+        foreach ($where as $key => $value) {
+            $this->sql['where'] = ' WHERE `'.$key."`='".$value."'";
+        }
+        return $this;
     }
 
     /**
@@ -118,22 +140,61 @@ final class Mysql
     public function insert(array $data)
     {
         $sql = 'INSERT `'.$this->table.'` SET ';
-        foreach ($data as $field => $value) {
-            $sql .= '`'.$field.'`=?,';
+        foreach ($data as $col => $value) {
+            $sql .= '`'.$col.'`=?,';
         }
         $sql = rtrim($sql, ',');
         return $this->query($sql, array_values($data));
     }
 
     /**
-     * 查询全部数据
+     * 查询指定列
+     *
+     * @param string $expr
      *
      * @return array
      */
-    public function fetchAll()
+    public function select($expr = false)
     {
-        $sql = 'SELECT * FROM `'.$this->table.'`';
+        $expression = $this->expr($expr);
+        $sql = 'SELECT '.$expression.' FROM '.$this->table.$this->sql['where'];
+        $this->sql['where'] = '';
         return $this->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * 查询单行数据
+     *
+     * @param string $expr
+     *
+     * @return mixed
+     */
+    public function find($expr = false)
+    {
+        $expression = $this->expr($expr);
+        $sql = 'SELECT '.$expression.' FROM '.$this->table.$this->sql['where'].' LIMIT 1';
+        $this->sql['where'] = '';
+        $result = $this->query($sql)->fetch(\PDO::FETCH_ASSOC);
+        if (count($result) == 1 && $expr) {
+            return $result[$expr];
+        } else {
+            return $result;
+        }
+    }
+
+    /**
+     * 给列名加上``
+     *
+     * @param string $expr
+     *
+     * @return string
+     */
+    private function expr($expr)
+    {
+        if (!$expr) return '*';
+        return implode(',', array_map(function($v){
+            return '`'.$v.'`';
+        }, explode(',', $expr)));
     }
 
     // prevent a secend instance of it

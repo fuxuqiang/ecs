@@ -25,7 +25,7 @@ class Config
 	private static function read()
 	{
 		$data = [];
-		$res = db('shop_config')->fetchAll();
+		$res = db('shop_config')->select();
 		foreach ($res as $row) {
 			$data[$row['code']] = $row['value'];
 		}

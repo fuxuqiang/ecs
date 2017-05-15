@@ -40,7 +40,7 @@
       <tr>
         <td></td>
         <td>
-          <ul style="margin:0; padding:0 10px" class="msg-link">
+          <ul>
             <li><a href="javascript:history.back()">{$lang.go_back}</a></li>
           </ul>
         </td>
@@ -48,43 +48,18 @@
     </table>
   </div>
 </div>
-@if(isset($auto_redirect))
-<script language="JavaScript">
+<script>
 var seconds = 3;
-var defaultUrl = "{$default_url}";
-
-onload = function()
-{
-  if (defaultUrl == 'javascript:history.go(-1)' && window.history.length == 0)
-  {
-    document.getElementById('redirectionMsg').innerHTML = '';
-    return;
-  }
-
-//  window.setInterval(redirection, 1000);
-}
-function redirection()
-{
-  if (seconds <= 0)
-  {
-    window.clearInterval();
-    return;
-  }
-
-  seconds --;
+window.setInterval(function(){
+  seconds--;
   document.getElementById('spanSeconds').innerHTML = seconds;
-
-  if (seconds == 0)
-  {
-    window.clearInterval();
-    location.href = defaultUrl;
+  if (seconds == 0) {
+    location.href = history.back();
   }
-}
-//-->
+}, 1000);
 </script>
-@endif
 <div id="footer">
-{$query_info}{$memory_info}<br />
+{$query_info}{$memory_info}<br>
 </div>
 </body>
 </html>

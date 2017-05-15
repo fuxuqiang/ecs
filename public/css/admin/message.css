@@ -1,6 +1,6 @@
 .list-div {
   width: 100%;
-  padding: 0 ;
+  padding: 0;
 }
 .list-div table {
   width: 100%;
@@ -22,28 +22,30 @@
 .list-div a:hover {
   color: #9D7250;
 }
-.list-div.message{
+.list-div {
   border: 1px solid #BBDDE5;
 }
-.list-div.message table{
+.list-div table{
   border: none;
 }
-.list-div.message td{
+.list-div td{
   background: none;
   border: none;
   text-align: left;
 }
-.list-div.message div {
+.list-div div {
 	background: #FFF; 
 	padding: 20px 50px; 
 	margin: 2px;
 }
 
-ul.msg-link {
+ul {
+  margin:0; 
+  padding:0 10px;
   list-style-type: none;
 }
 
-ul.msg-link li {
+ul li {
   background: url(/img/admin/arrow.gif) no-repeat 0px 6px;
   padding-left: 18px;
   margin-left: 0;
