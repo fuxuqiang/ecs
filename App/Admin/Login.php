@@ -16,8 +16,6 @@ class Login extends Init
 			// 显示登录页面
 			view('login', ['lang' => $lang, 'gd_ver' => gd_info()['GD Version']]);
 		} else {
-			// 启动session
-			session_start();
 			// 检查验证码
 			if (!isset($_POST['no-captcha'])) {
 				if (!isset($_POST['captcha'])) {

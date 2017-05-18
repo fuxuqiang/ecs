@@ -158,8 +158,7 @@ final class Mysql
      */
     public function select($expr = false)
     {
-        $expression = $this->expr($expr);
-        $sql = 'SELECT '.$expression.' FROM '.$this->table.$this->sql['where'];
+        $sql = $this->selectSQL($expr);
         $result = $this->query($sql, $this->where)->fetchAll(\PDO::FETCH_ASSOC);
         $this->reset();
         return $result;
@@ -174,8 +173,7 @@ final class Mysql
      */
     public function find($expr = false)
     {
-        $expression = $this->expr($expr);
-        $sql = 'SELECT '.$expression.' FROM '.$this->table.$this->sql['where'].' LIMIT 1';
+        $sql = $this->selectSQL($expr).' LIMIT 1';
         $result = $this->query($sql, $this->where)->fetch(\PDO::FETCH_ASSOC);
         $this->reset();
         if (count($result) == 1 && $expr) {
@@ -192,12 +190,16 @@ final class Mysql
      *
      * @return string
      */
-    private function expr($expr)
+    private function selectSQL($expr)
     {
-        if (!$expr) return '*';
-        return implode(',', array_map(function($v){
-            return '`'.$v.'`';
-        }, explode(',', $expr)));
+        if (!$expr) {
+            $expr = '*';
+        } else {
+            $expr = implode(',', array_map(function($v){
+                return '`'.$v.'`';
+            }, explode(',', $expr)));
+        }
+        return 'SELECT '.$expr.' FROM '.$this->table.$this->sql['where'];
     }
 
     /**

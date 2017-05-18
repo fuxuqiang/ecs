@@ -16,7 +16,7 @@ class Captcha
 		shuffle($randKeys);
 		$code = '';
 		foreach($randKeys as $v){
-			$code.=$char[$v];
+			$code .= $char[$v];
 		}
 		// 赋值给SESSION
 		session_start();
@@ -48,6 +48,7 @@ class Captcha
 
 	public static function check($captcha)
 	{
+		session_start();
 		if ($captcha == $_SESSION['captcha']) {
 			return true;
 		}
