@@ -11,13 +11,13 @@ class Login extends Init
 	{
 		// 获取语言变量值
 		$lang = lang_var('login');
-		// 启动session
-		session_start();
 		// 是否有登录操作
 		if (empty($_POST)) {
 			// 显示登录页面
 			view('login', ['lang' => $lang, 'gd_ver' => gd_info()['GD Version']]);
 		} else {
+			// 启动session
+			session_start();
 			// 检查验证码
 			if (!isset($_POST['no-captcha'])) {
 				if (!isset($_POST['captcha'])) {

@@ -32,8 +32,8 @@ class Captcha
 			$img, 
 			$fontSize, 
 			0,//mt_rand(-10,10), 
-			mt_rand(1, $imgW/$charLen), 
-			mt_rand($imgH*0.8, $imgH*0.9), 
+			mt_rand(1, $imgW - $fontSize*$charLen), 
+			mt_rand($imgH*0.7, $imgH*0.8), 
 			$strColor, 
 			$font, 
 			$code

@@ -20,9 +20,10 @@ final class Mysql
 
     /**
      * @var array $setting 数据库连接配置
+     * @var array $where 查询条件数组
      * @var PDO   $linkID PDO实例
      */
-    private $settings, $linkID;
+    private $settings, $where, $linkID;
 
     /**
      * @var array $sql SQL组成
@@ -100,9 +101,10 @@ final class Mysql
      */
     public function where($where)
     {
-        foreach ($where as $key => $value) {
-            $this->sql['where'] = ' WHERE `'.$key."`='".$value."'";
+        foreach ($where as $col => $value) {
+            $this->sql['where'] = ' WHERE `'.$col.'`=?';
         }
+        $this->where = array_values($where);
         return $this;
     }
 
@@ -158,8 +160,8 @@ final class Mysql
     {
         $expression = $this->expr($expr);
         $sql = 'SELECT '.$expression.' FROM '.$this->table.$this->sql['where'];
-        $this->sql['where'] = '';
-        return $this->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        $this->reset();
+        return $this->query($sql, $this->where)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -173,7 +175,7 @@ final class Mysql
     {
         $expression = $this->expr($expr);
         $sql = 'SELECT '.$expression.' FROM '.$this->table.$this->sql['where'].' LIMIT 1';
-        $this->sql['where'] = '';
+        $this->reset();
         $result = $this->query($sql)->fetch(\PDO::FETCH_ASSOC);
         if (count($result) == 1 && $expr) {
             return $result[$expr];
@@ -195,6 +197,17 @@ final class Mysql
         return implode(',', array_map(function($v){
             return '`'.$v.'`';
         }, explode(',', $expr)));
+    }
+
+    /**
+     * 重置查询参数
+     *
+     * @return void
+     */
+    private function reset()
+    {
+        $this->sql['where'] = '';
+        $this->where = '';
     }
 
     // prevent a secend instance of it
