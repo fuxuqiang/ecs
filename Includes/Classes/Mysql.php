@@ -160,8 +160,9 @@ final class Mysql
     {
         $expression = $this->expr($expr);
         $sql = 'SELECT '.$expression.' FROM '.$this->table.$this->sql['where'];
+        $result = $this->query($sql, $this->where)->fetchAll(\PDO::FETCH_ASSOC);
         $this->reset();
-        return $this->query($sql, $this->where)->fetchAll(\PDO::FETCH_ASSOC);
+        return $result;
     }
 
     /**
@@ -175,8 +176,8 @@ final class Mysql
     {
         $expression = $this->expr($expr);
         $sql = 'SELECT '.$expression.' FROM '.$this->table.$this->sql['where'].' LIMIT 1';
+        $result = $this->query($sql, $this->where)->fetch(\PDO::FETCH_ASSOC);
         $this->reset();
-        $result = $this->query($sql)->fetch(\PDO::FETCH_ASSOC);
         if (count($result) == 1 && $expr) {
             return $result[$expr];
         } else {
