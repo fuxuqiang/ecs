@@ -6,17 +6,17 @@ return [
 
 	// 数据库配置
 	'db' => [
-		'host'	 => 'localhost',
-		'port'   => '3306',
-		'name'   => 'ecs',
-		'user'   => 'root',
-		'pass'   => 'eb',
-		'prefix' => ''
+		'host'	 => '[host]',
+		'port'   => '[port]',
+		'name'   => '[name]',
+		'user'   => '[user]',
+		'pass'   => '[pass]',
+		'prefix' => '[prefix]'
 	],
 
 	'charset'  => 'utf-8',
 
-	'timezone' => 'Asia/Chongqing',
+	'timezone' => '[timezone]',
 
 	// 缓存配置
 	'cache' => [
