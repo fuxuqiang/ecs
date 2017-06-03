@@ -23,7 +23,7 @@ final class Mysql
      * @var array $where 查询条件数组
      * @var PDO   $linkID PDO实例
      */
-    private $settings, $where, $linkID;
+    private $settings, $where = [], $linkID;
 
     /**
      * @var array $sql SQL组成
@@ -95,16 +95,20 @@ final class Mysql
     /**
      * 设置WHERE条件
      *
-     * @param array $where
+     * @param mixed $where
      *
      * @return static
      */
     public function where($where)
     {
-        foreach ($where as $col => $value) {
-            $this->sql['where'] = ' WHERE `'.$col.'`=?';
+        if (is_array($where)) {
+            foreach ($where as $col => $value) {
+                $this->sql['where'] = ' WHERE `'.$col.'`=?';
+            }
+            $this->where = array_values($where);
+        } else {
+            $this->sql['where'] = $where;
         }
-        $this->where = array_values($where);
         return $this;
     }
 
@@ -124,24 +128,42 @@ final class Mysql
         // 记录查询开始时间
         $this->queryTime = microtime(true);
         // 执行查询
-        $sth = $this->linkID->prepare($sql);
-        $sth->execute($data);
+        if (!$stmt = $this->linkID->prepare($sql)) {
+            if ($this->settings['quiet']) {
+                $this->error = $this->linkID->error;
+                return false;
+            } else {
+                trigger_error($this->linkID->error, E_USER_ERROR);
+            }
+        }
+        // 
+        if ($bindings) {
+            $types = '';
+            foreach ($bindings as $v) {
+                $types .= 's';
+            }
+            $bindings = array_unshift($bindings, $types);
+            call_user_func_array([$stmt, 'bind_param'], $bindings);
+        }
+        // 
+        $stmt->execute();
         // 查询次数
         $this->queryCount++;
-        
-        return $sth;
+        // 返回查询结果
+        return $stmt->get_result();
     }
 
     /**
      * 插入数据
      *
      * @param array $data
+     * @param bool  $replace
      *
      * @return PDOStatement
      */
-    public function insert(array $data)
+    public function insert(array $data, $replace=false)
     {
-        $sql = 'INSERT `'.$this->table.'` SET ';
+        $sql = ($replace ? 'REPLACE ' : 'INSERT ').$this->table.' SET ';
         foreach ($data as $col => $value) {
             $sql .= '`'.$col.'`=?,';
         }
@@ -181,6 +203,20 @@ final class Mysql
         } else {
             return $result;
         }
+    }
+
+    /**
+     * 删除
+     *
+     * @param array $where
+     *
+     * @return mixed
+     */
+    public function delete(array $where)
+    {
+        $this->where($where);
+        $sql = 'DELETE '.$this->table.$this->sql['where'];
+        return $this->query($sql, $this->where);
     }
 
     /**
