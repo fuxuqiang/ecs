@@ -30,10 +30,22 @@ class Install
 		$disabled = '';
 		// 获取语言变量
 		$lang = lang_var('check', true);
+		// 是否支持mysqli
+		if (extension_loaded('mysqli') && extension_loaded('mysqlnd')) {
+			$mysqli = $lang['support'];
+		} else {
+			$mysqli = $lang['not_support'];
+			$disabled = 'disabled';
+		}
 		// 获取GD的版本号
-		$gd_ver = gd_info()['GD Version'] ?: $lang['not_support'];
+		if (function_exists('gd_info')) {
+			$gd_ver = gd_info()['GD Version'];
+		} else {
+			$gd_ver = $lang['not_support'];
+			$disabled = 'disabled';
+		}
 		// 检查目录权限
-		$dirs = ['temp/compile', 'config', 'config/config.php'];
+		$dirs = ['config', 'config/config.php', 'temp/compile', 'temp/static_caches'];
 		foreach ($dirs as $key => $dir) {
 			$dirCheck[$key]['dir'] = $dir;
 			$path = ROOT_PATH.$dir;
@@ -51,7 +63,7 @@ class Install
 			}
 		}
 		// 显示视图
-		view('checked', compact('gd_ver', 'dirCheck', 'lang', 'disabled'), true);
+		view('checked', compact('mysqli', 'gd_ver', 'dirCheck', 'lang', 'disabled'), true);
 	}
 
 	// 配置页
@@ -63,7 +75,7 @@ class Install
 	// 查询数据库列表
 	public function getDbList($host, $port, $user, $pass)
 	{
-		$db = @new \mysqli($host, $user, $pass, null, $port);
+		$db = new \mysqli($host, $user, $pass, null, $port);
 		if ($db->connect_errno) {
 			exit(json_encode(['status'=>false, 'content'=>lang_var('common')['query_failed']]));
 		} else {
