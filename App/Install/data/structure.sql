@@ -16,5 +16,5 @@ DROP TABLE IF EXISTS `ecs_session`;
 CREATE TABLE `ecs_session` (
   `sesskey` varchar(32) PRIMARY KEY,
   `expiry` int unsigned NOT NULL,
-  `data` varchar(255) NOT NULL,
+  `data` varchar(255) NOT NULL
 ) ENGINE=MEMORY;
