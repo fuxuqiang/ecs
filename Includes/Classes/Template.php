@@ -17,6 +17,8 @@ class Template
 
 	private $view;
 
+	private $var;
+
 	/**
 	 * 显示页面
 	 *
@@ -29,7 +31,9 @@ class Template
 	{
 		$this->fetch($filename);
 		// 导入变量
-		extract($var);
+		foreach ($var as $key => $value) {
+			$this->var[$key] = $value;
+		}
 		// 是否生成编译文件
 		if ($this->directOutput) {
 			eval('?>'.$this->content);
@@ -76,29 +80,44 @@ class Template
 	/**
 	 * 解析php标签组
 	 *
-	 * @param $string $content
+	 * @param string $content
 	 *
-	 * @return $string
+	 * @return string
 	 */
 	private function parseTags($content)
 	{
 		// 解析if、elseif、foreach标签
 		$content = preg_replace('~@((if|elseif|foreach)(\(((?>[^()]+)|(?3))*\)))~', '<?php $1: ?>', $content);
+		$content = preg_replace_callback('~@(if|elseif|foreach)(\(((?>[^()]+)|(?3))*\)))~', function($matches){
+			return preg_replace_callback("<?php $matches[1]: ?>", );
+		}, $content);
 		$content = preg_replace('~@end(if|foreach)~', '<?php end$1; ?>', $content);
 		// 解析else标签
 		$content = str_replace('@else', '<?php else: ?>', $content);
 		// 解析模板变量输出，并返回
-		return preg_replace_callback('~{(\$(?>[^{}]+))}~', function($matches){
+		return '<?='.$this->parseVar($content).'?>';
+	}
+
+	/**
+	 * 解析变量
+	 *
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	public function parseVar($content)
+	{
+		return preg_replace_callback('~{\$((?>[^{}]+))}~', function($matches){
 			if (strpos($matches[1], '.') === false) {
-				$var = $matches[1];
+				$var = "\$this->var['$matches[1]']";
 			} else {
 				$arr = explode('.', $matches[1]);
-				$var = array_shift($arr);
+				$var = '$this->var[\''.array_shift($arr).'\']';
 				foreach ($arr as $v) {
 					$var .= "['".$v."']";
 				}
 			}
-			return '<?='.$var.'?>';
+			return $var;
 		}, $content);
 	}
 
