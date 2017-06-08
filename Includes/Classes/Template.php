@@ -89,7 +89,7 @@ class Template
 		// 解析if、elseif、foreach标签
 		$content = preg_replace('~@((if|elseif|foreach)(\(((?>[^()]+)|(?3))*\)))~', '<?php $1: ?>', $content);
 		$content = preg_replace_callback('~@(if|elseif|foreach)(\(((?>[^()]+)|(?3))*\)))~', function($matches){
-			return preg_replace_callback("<?php $matches[1]: ?>", );
+			return $this->parseVar("<?php $matches[1]: ?>");
 		}, $content);
 		$content = preg_replace('~@end(if|foreach)~', '<?php end$1; ?>', $content);
 		// 解析else标签
@@ -105,7 +105,7 @@ class Template
 	 *
 	 * @return string
 	 */
-	public function parseVar($content)
+	private function parseVar($content)
 	{
 		return preg_replace_callback('~{\$((?>[^{}]+))}~', function($matches){
 			if (strpos($matches[1], '.') === false) {
