@@ -2,23 +2,23 @@
   <tr>
     <td>
       <div id="wrapper">
-        <h3>{$lang.system_environment}</h3>
+        <h3>{{ $lang['system_environment'] }}</h3>
         <div class="list">
-          {$lang.php_os}..........................................................................................................................<?= PHP_OS ?><br>
-          {$lang.php_ver}..........................................................................................................................<?= PHP_VERSION ?><br>
-          {$lang.does_support_mysqli}..........................................................................................................................<?= $mysqli ?><br>
-          {$lang.gd_version}..........................................................................................................................<?= $gd_ver ?><br>
+          {{ $lang['php_os'] }}..........................................................................................................................{{ PHP_OS }}<br>
+          {{ $lang['php_ver'] }}..........................................................................................................................{{ PHP_VERSION }}<br>
+          {{ $lang['does_support_mysqli'] }}..........................................................................................................................{{ $mysqli }}<br>
+          {{ $lang['gd_version'] }}.........................................................................................................................{{ $gd_ver }}<br>
         </div>
-        <h3>{$lang.dir_priv_checking}</h3>
+        <h3>{{ $lang['dir_priv_checking'] }}</h3>
         <div class="list">
         @foreach($dirCheck as $value)
-          {$value.dir}.......................................................................................................................
+          {{ $value['dir'] }}.......................................................................................................................
           @if($value['rst'] == $lang['can_write'])
             <span style="color:green;">
           @else
             <span style="color:red;">
           @endif
-              {$value.rst}
+              {{ $value['rst'] }}
             </span><br />
         @endforeach
         </div>
@@ -29,10 +29,10 @@
     <td>
       <div id="install-btn">
         <form action="/install/set">
-          <input type="button" class="button" value="{$lang.prev_step}{$lang.welcome_page}" onclick="location.href='/install?lang=<?= lang() ?>'" />
-          <input type="button" class="button" value="{$lang.recheck}" onclick="check()" />
-          <input type="hidden" name="lang" value="<?= lang() ?>">
-          <input type="submit" class="button" value="{$lang.next_step}{$lang.config_system}" {$disabled} />
+          <input type="button" class="button" value="{{ $lang['prev_step'].$lang['welcome_page'] }}" onclick="location.href='/install?lang={{ lang() }}'" />
+          <input type="button" class="button" value="{{ $lang['recheck'] }}" onclick="check()" />
+          <input type="hidden" name="lang" value="{{ lang() }}">
+          <input type="submit" class="button" value="{{ $lang['next_step'].$lang['config_system'] }}" {{ $disabled }} />
         </form>
       </div>
     </td>

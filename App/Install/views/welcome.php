@@ -12,7 +12,7 @@
         <tr align="center" style="padding-top:10px;">
           <td>
             <span id="install-btn">
-              <input class="button" type="submit" value="{$lang.next_step}{$lang.check_system_environment}" />
+              <input class="button" type="submit" value="{{ $lang['next_step'].$lang['check_system_environment'] }}" />
             </span>
           </td>
         </tr>

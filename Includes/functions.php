@@ -89,14 +89,14 @@ function lang_var($name, $getCommon = false)
     if (is_file($langFile)) {
         $langVar = require($langFile);
     } else {
-        trigger_error('Can\'t find language package!', E_USER_ERROR);
+        trigger_error("Can't find language package '$name'!", E_USER_ERROR);
     }
     if ($getCommon) {
         $commonLangFile = $langPath.'common.php';
         if (is_file($commonLangFile)) {
             $langVar += require $commonLangFile; 
         } else {
-            trigger_error('Can\'t find language package!', E_USER_ERROR);
+            trigger_error("Can't find language package 'common'!", E_USER_ERROR);
         }
     }
     return $langVar;
@@ -143,7 +143,7 @@ function redirect($url)
 function view($filename, $var, $direct_output=false)
 {
     $template = new \Includes\Classes\Template;
-    $template->templateDir = module_path('views/');
+    $template->tplDir = module_path('views/');
     $template->compileDir = ROOT_PATH.'temp/compile/';
     if ($direct_output) {
         $template->directOutput = true;

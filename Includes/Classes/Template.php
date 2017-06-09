@@ -7,16 +7,16 @@ namespace Includes\Classes;
  */
 class Template
 {
-	public $templateDir;
+	/**
+	 * @var string $tplDir 模板目录
+	 * @var string $compileDir 编译目录
+	 * @var bool $directOutput 是否直接输出
+	 */
+	public $tplDir, $compileDir, $directOutput = false;
 
-	public $compileDir;
-
-	public $directOutput = false;
-
-	private $content;
-
-	private $view;
-
+	/**
+	 * @var array $var 模板变量
+	 */
 	private $var;
 
 	/**
@@ -27,75 +27,92 @@ class Template
 	 *
 	 * @return string
 	 */
-	public function display($filename, $var = [])
+	public function display($filename, array $var = [])
 	{
-		$this->fetch($filename);
-		// 导入变量
-		foreach ($var as $key => $value) {
-			$this->var[$key] = $value;
-		}
-		// 是否生成编译文件
-		if ($this->directOutput) {
-			eval('?>'.$this->content);
+		// 获取模板路径
+		$tplFile = $this->getTplPath($filename);
+		// 编译文件是否可用
+		$view = $this->compileDir.md5($tplFile).'.php';
+		if (is_file($view) && filemtime($view) > filemtime($tplFile)) {
+			$this->assign($var);
+			require $view;
 		} else {
-			$this->view = $this->compileDir.md5($this->tplFile).'.php';
-			file_put_contents($this->view, $this->content);
-			require $this->view;
+			// 获取模板内容
+			$content = $this->getContent($tplFile);
+			// 解析include标签
+			$content = $this->parseInclude($content);
+			// 是否继承
+			if (preg_match("~@extends\('(\w+)'\)~", $content, $matches) && strpos($content, $matches[0]) === 0) {
+				// 获取继承模板内容
+				$parentTplFile = $this->getTplPath($matches[1]);
+				$parentContent = $this->getContent($parentTplFile);
+				// 解析section区块
+				if ($content = $this->parseSection($content)) {
+					$content = preg_replace_callback("~@yield\('(\w+)'\)~", function($matches) use($content){
+						return isset($content[$matches[1]])? $content[$matches[1]]:'';
+					}, $parentContent);
+				} else {
+					trigger_error('Can\'t find @section tag in ('.$tplFile.')', E_USER_ERROR);
+				}
+			}
+			// 解析php标签
+			$content = $this->parseControlStructures($content);
+			$content = $this->parseEcho($content);
+			// 注册变量
+			$this->assign($var);
+			// 是否生成编译文件
+			if ($this->directOutput) {
+				eval('?>'.$content);
+			} else {
+				file_put_contents($view, $content);
+				require $view;
+			}
 		}
-		exit;
 	}
 
 	/**
-	 * 获取显示内容
+	 * 注册变量
 	 *
-	 * @param string $filename
+	 * @param array $var
 	 *
 	 * @return void
 	 */
-	private function fetch($filename)
+	private function assign(array $var = [])
 	{
-		// 获取模板内容
-		$this->tplFile = $this->getTemplatePath($filename);
-		$content = $this->getContent($this->tplFile);
-		// 解析include标签
-		$content = $this->parseInclude($content);
-		// 是否继承
-		if (preg_match("~@extends\('((?>\w+))'\)~", $content, $matches) && strpos($content, $matches[0]) === 0) {
-			// 获取继承模板内容
-			$parentTplFile = $this->getTemplatePath($matches[1]);
-			$parentContent = $this->getContent($parentTplFile);
-			// 解析section区块
-			if ($content = $this->parseSection($content)) {
-				$content = preg_replace_callback("~@yield\('((?>\w+))'\)~", function($matches) use($content){
-					return isset($content[$matches[1]])? $content[$matches[1]]:'';
-				}, $parentContent);
-			} else {
-				trigger_error('Can\'t find @section tag in ('.$this->tplFile.')', E_USER_ERROR);
-			}
+		foreach ($var as $key => $value) {
+			$this->var[$key] = $value;
 		}
-		// 解析php标签组
-		$this->content = $this->parseTags($content);
 	}
 
 	/**
-	 * 解析php标签组
+	 * 解析解析if、else、elseif、foreach标签
 	 *
 	 * @param string $content
 	 *
 	 * @return string
 	 */
-	private function parseTags($content)
+	private function parseControlStructures($content)
 	{
-		// 解析if、elseif、foreach标签
-		$content = preg_replace('~@((if|elseif|foreach)(\(((?>[^()]+)|(?3))*\)))~', '<?php $1: ?>', $content);
-		$content = preg_replace_callback('~@(if|elseif|foreach)(\(((?>[^()]+)|(?3))*\)))~', function($matches){
+		$content = preg_replace_callback('~@((if|elseif|foreach)(\(((?>[^()]+)|(?3))*\)))~', function($matches){
 			return $this->parseVar("<?php $matches[1]: ?>");
 		}, $content);
-		$content = preg_replace('~@end(if|foreach)~', '<?php end$1; ?>', $content);
-		// 解析else标签
 		$content = str_replace('@else', '<?php else: ?>', $content);
-		// 解析模板变量输出，并返回
-		return '<?='.$this->parseVar($content).'?>';
+		$content = preg_replace('~@end(if|foreach)~', '<?php end$1; ?>', $content);
+		return $content;
+	}
+
+	/**
+	 * 解析Echo
+	 *
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	private function parseEcho($content)
+	{
+		return preg_replace_callback('~{{(.*?)}}~', function($matches){
+			return $this->parseVar("<?= $matches[1] ?>");
+		}, $content);
 	}
 
 	/**
@@ -107,18 +124,7 @@ class Template
 	 */
 	private function parseVar($content)
 	{
-		return preg_replace_callback('~{\$((?>[^{}]+))}~', function($matches){
-			if (strpos($matches[1], '.') === false) {
-				$var = "\$this->var['$matches[1]']";
-			} else {
-				$arr = explode('.', $matches[1]);
-				$var = '$this->var[\''.array_shift($arr).'\']';
-				foreach ($arr as $v) {
-					$var .= "['".$v."']";
-				}
-			}
-			return $var;
-		}, $content);
+		return preg_replace('~\$(\w+)~', "\$this->var['$1']", $content);
 	}
 
 	/**
@@ -130,8 +136,8 @@ class Template
 	 */
 	private function parseInclude($content)
 	{
-		return preg_replace_callback("~@include\('((?>\w+))'\)~", function($matches){
-			$includeFilename = $this->getTemplatePath($matches[1]); 
+		return preg_replace_callback("~@include\('(\w+)'\)~", function($matches){
+			$includeFilename = $this->getTplPath($matches[1]); 
 			return $this->getContent($includeFilename);
 		}, $content);
 	}
@@ -145,7 +151,7 @@ class Template
 	 */
 	private function parseSection($content)
 	{
-		if (preg_match_all("~@section\('((?>\w+))'\)(.*?)@endsection~s", $content, $matches, PREG_SET_ORDER)) {
+		if (preg_match_all("~@section\('(\w+)'\)(.*?)@endsection~s", $content, $matches, PREG_SET_ORDER)) {
 			$sections = [];
 			foreach ($matches as $match) {
 				$sections[$match[1]] = trim($match[2]);
@@ -175,9 +181,9 @@ class Template
 	 *
 	 * @return mixed
 	 */
-	private function getTemplatePath($name)
+	private function getTplPath($name)
 	{
-		$path = $this->templateDir.$name.'.php';
+		$path = $this->tplDir.$name.'.php';
 		if (is_file($path)) {
 			return $path;
 		} else {

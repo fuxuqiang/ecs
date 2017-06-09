@@ -1,6 +1,6 @@
 <div id="lang-menu">
   <div id="lang-menu-inside">
-    {$lang.select_installer_lang}
+    {{ $lang['select_installer_lang'] }}
     简
     <label>
       <input type="radio" name="lang" value="cmn-Hans" id="cmn-Hans" />简体中文

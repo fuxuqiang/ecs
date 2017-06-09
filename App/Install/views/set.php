@@ -12,45 +12,45 @@
         <tr>
           <td valign="top">
             <div id="wrapper">
-              <h3>{$lang.db_account}</h3>
+              <h3>{{ $lang['db_account'] }}</h3>
               <table class="list">
                 <tr>
-                  <td width="90">{$lang.db_host}</td>
+                  <td width="90">{{ $lang['db_host'] }}</td>
                   <td><input type="text" name="db-host" value="localhost" /></td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.db_port}</td>
+                  <td width="90">{{ $lang['db_port'] }}</td>
                   <td><input type="text" name="db-port" value="3306" /></td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.db_user}</td>
+                  <td width="90">{{ $lang['db_user'] }}</td>
                   <td><input type="text" name="db-user" value="root" /></td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.db_pass}</td>
+                  <td width="90">{{ $lang['db_pass'] }}</td>
                   <td><input type="password" name="db-pass" /></td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.db_name}</td>
+                  <td width="90">{{ $lang['db_name'] }}</td>
                   <td>
                     <input type="text" name="db-name" onblur="getDbList(dbExists)" />
                     <select name="db-list">
-                      <option>{$lang.db_list}</option>
+                      <option>{{ $lang['db_list'] }}</option>
                     </select>
-                    <input type="button" name="go" class="button" value="{$lang.go}" onclick="getDbList(displayDbList)" />
+                    <input type="button" name="go" class="button" value="{{ $lang['go'] }}" onclick="getDbList(displayDbList)" />
                   </td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.db_prefix}</td>
-                  <td><input type="text" name="db-prefix"  value="ecs_" /><span class="comment">&nbsp; ({$lang.change_prefix})</span></td>
+                  <td width="90">{{ $lang['db_prefix'] }}</td>
+                  <td><input type="text" name="db-prefix"  value="ecs_" /><span class="comment">&nbsp; ({{ $lang['change_prefix'] }})</span></td>
                 </tr>
               </table>
               <div id="monitor" draggable="true">
-                <h3 id="monitor-title">{$lang.monitor_title}</h3>
+                <h3 id="monitor-title">{{ $lang['monitor_title'] }}</h3>
                 <div style="background:#fff;padding-bottom:20px;">
                   <img id="monitor-loading" src='/img/loading.gif' /><br /><br />
                   <strong id="monitor-wait-please"></strong>
-                  <span id="monitor-view-detail">{$lang.display_detail}</span>
+                  <span id="monitor-view-detail">{{ $lang['display_detail'] }}</span>
                 </div>
                 <div id="monitor-notice" name="monitor-notice" style="display:none;">
                   <div id="notice"></div>
@@ -58,49 +58,49 @@
                 </div>
                 <img id="monitor-close" src='/img/close.gif' />
               </div>
-              <h3>{$lang.admin_account}</h3>
+              <h3>{{ $lang['admin_account'] }}</h3>
               <table class="list">
                 <tr>
-                  <td width="90">{$lang.admin_name}</td>
+                  <td width="90">{{ $lang['admin_name'] }}</td>
                   <td><input type="text" name="admin-name" required></td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.admin_password}</td>
+                  <td width="90">{{ $lang['admin_password'] }}</td>
                   <td>
                     <input type="password" name="admin-pwd" required>
                     <span id="admin-pwd-result"></span>
                   </td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.password_intensity}</td>
+                  <td width="90">{{ $lang['password_intensity'] }}</td>
                   <td>
                     <table width="132" cellspacing="0" cellpadding="1" border="0">
                       <tr align="center">
-                        <td width="33%" id="pwd_low" style="border-bottom: 2px solid red;">{$lang.pwd_low}</td>
-                        <td width="33%" id="pwd_middle" style="border-bottom: 2px solid rgb(218, 218, 218);">{$lang.pwd_middle}</td>
-                        <td width="33%" id="pwd_high" style="border-bottom: 2px solid rgb(218, 218, 218);">{$lang.pwd_high}</td>
+                        <td width="33%" id="pwd_low" style="border-bottom: 2px solid red;">{{ $lang['pwd_low'] }}</td>
+                        <td width="33%" id="pwd_middle" style="border-bottom: 2px solid rgb(218, 218, 218);">{{ $lang['pwd_middle'] }}</td>
+                        <td width="33%" id="pwd_high" style="border-bottom: 2px solid rgb(218, 218, 218);">{{ $lang['pwd_high'] }}</td>
                       </tr>
                     </table>
                   </td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.admin_password2}</td>
+                  <td width="90">{{ $lang['admin_password2'] }}</td>
                   <td>
                     <input type="password" name="admin-pwd2" value="" />
                     <span id="confirm-pwd-result"></span>
                   </td>
                 </tr>
                 <tr>
-                  <td width="90">{$lang.admin_email}</td>
+                  <td width="90">{{ $lang['admin_email'] }}</td>
                   <td><input type="text" name="admin-email" value="" /></td>
                 </tr>
               </table>
-              <h3>{$lang.mix_options}</h3>
+              <h3>{{ $lang['mix_options'] }}</h3>
               <table class="list">
                 <tr>
-                  <td width="90">{$lang.set_timezone}</td>
+                  <td width="90">{{ $lang['set_timezone'] }}</td>
                   <td>
-                    <input type="text" name="timezone" value="<?= date_default_timezone_get() ?>">
+                    <input type="text" name="timezone" value="{{ date_default_timezone_get() }}">
                   </td>
                 </tr>
                 <tr>
@@ -114,8 +114,8 @@
         <tr>
           <td>
             <div id="install-btn">
-              <input type="button" class="button" value="{$lang.prev_step}{$lang.check_system_environment}" onclick="location.href='/install/checking?lang=<?= lang() ?>'" />
-              <input id="install-at-once" type="submit" class="button" value="{$lang.install_at_once}" />
+              <input type="button" class="button" value="{{ $lang['prev_step'].$lang['check_system_environment'] }}" onclick="location.href='/install/checking?lang={{ lang() }}'" />
+              <input id="install-at-once" type="submit" class="button" value="{{ $lang['install_at_once'] }}" />
             </div>
           </td>
         </tr>
@@ -197,15 +197,15 @@
       } else {
         isDisabled(true);
         if (pwd2 != '') {
-          confirmPwdResult.innerHTML = htmlOfNo('{$lang.passwords_not_eq}');
+          confirmPwdResult.innerHTML = htmlOfNo("{{ $lang['passwords_not_eq'] }}");
         }
       }
     } else {
       isDisabled(true);
       if (pwd.length < 8) {
-        var msg = '{$lang.password_short}';
+        var msg = "{{ $lang['password_short'] }}";
       } else {
-        var msg = '{$lang.password_invalid}';
+        var msg = "{{ $lang['password_invalid'] }}";
       }
       adminPwdResult.innerHTML = htmlOfNo(msg);
     }
@@ -220,11 +220,11 @@
     } else {
       isDisabled(true);
       if (pwd != pwd2) {
-        var msg = '{$lang.passwords_not_eq}';
+        var msg = "{{ $lang['passwords_not_eq'] }}";
       } else if (pwd2.length < 8){
-        var msg = '{$lang.password_short}';
+        var msg = "{{ $lang['password_short'] }}";
       } else {
-        var msg = '{$lang.password_invalid}';
+        var msg = "{{ $lang['password_invalid'] }}";
       }
       confirmPwdResult.innerHTML = htmlOfNo(msg);
     }
@@ -259,7 +259,7 @@
   function dbExists(databases) {
     for (var key in databases) {
       if (dbName.value === databases[key]) {
-        if (!confirm('{$lang.db_exists}')) {
+        if (!confirm("{{ $lang['db_exists'] }}")) {
           dbName.value = '';
         }
       }
@@ -268,7 +268,7 @@
 
   function displayDbList(databases) {
     dbList.options.length = 1;
-    dbList[0] = new Option('{$lang.databases_num}'.replace('%s',databases.length), '', false, false);
+    dbList[0] = new Option("{{ $lang['databases_num'] }}".replace('%s',databases.length), '', false, false);
     for (var key in databases) {
       dbList[dbList.options.length] = new Option(databases[key], databases[key], false, false);
     }
@@ -290,10 +290,10 @@
     for (var i = 0; i < form.elements.length; i++) {
       form.elements[i].disabled = true;
     }
-    document.getElementById('monitor-wait-please').innerHTML = '<strong style="color:blue">{$lang.wait_please}</strong>';
+    document.getElementById('monitor-wait-please').innerHTML = '<strong style="color:blue">{{ $lang['wait_please'] }}</strong>';
     monitor.style.display = 'block';
     var notice = document.getElementById('notice');
-    notice.innerHTML = '{$lang.create_config_file}';
+    notice.innerHTML = "{{ $lang['create_config_file'] }}";
     Ajax.get('/install/createConfFile', {
       host: form['db-host'].value, 
       port: form['db-port'].value,
@@ -308,21 +308,21 @@
   }
 
   function createDB() {
-    notice.innerHTML += '{$lang.create_database}';
+    notice.innerHTML += "{{ $lang['create_database'] }}";
     Ajax.get('/install/createDB', '', function(msg){
       handleMsg(msg, installBaseData);
     });
   }
 
   function installBaseData() {
-    notice.innerHTML += '{$lang.install_data}';
+    notice.innerHTML += "{{ $lang['install_data'] }}";
     Ajax.get('/install/installBaseData', '', function(msg){
       handleMsg(msg, createAdminPassport);
     });
   }
 
   function createAdminPassport() {
-    notice.innerHTML += '{$lang.create_admin_passport}';
+    notice.innerHTML += "{{ $lang['create_admin_passport'] }}";
     Ajax.get('/install/createAdminPassport', {
       name: form['admin-name'].value,
       pass: form['admin-pwd'].value,
@@ -333,7 +333,7 @@
   }
 
   function doOthers() {
-    notice.innerHTML += '{$lang.do_others}';
+    notice.innerHTML += "{{ $lang['do_others'] }}";
     var langs = document.getElementsByName('lang');
     for (var i = 0; i < langs.length; i++) {
       if (langs[i].checked) {
@@ -366,27 +366,27 @@
   function dispalyDetail(flag) {
     if (flag == 'block') {
         mn.style.display = 'none';
-        viewDetail.innerHTML = '{$lang.display_detail}';
+        viewDetail.innerHTML = "{{ $lang['display_detail'] }}";
     } else {
         mn.style.display = 'block';
-        viewDetail.innerHTML = '{$lang.hide_detail}';
+        viewDetail.innerHTML = "{{ $lang['hide_detail'] }}";
     }
   }
 
   function displayOKMsg() {
-      notice.innerHTML += '<span style="color:green;">{$lang.success}</span><br/>';
+      notice.innerHTML += '<span style="color:green;">{{ $lang['success'] }}</span><br/>';
   }
 
   function displayErrorMsg(msg) {
     stopped();
-    notice.innerHTML += '<span style="color:red;">{$lang.fail}</span><br/>';
+    notice.innerHTML += '<span style="color:red;">{{ $lang['fail'] }}</span><br/>';
     dispalyDetail();
     notice.innerHTML += '<strong style="color:red">'+msg+'</strong>';
   }
 
   function stopped() {
     document.getElementById('monitor-loading').src = '/img/loaded.gif';
-    document.getElementById('monitor-wait-please').innerHTML = '{$lang.has_been_stopped}';
+    document.getElementById('monitor-wait-please').innerHTML = "{{ $lang['has_been_stopped'] }}";
   }
 
   Drag.bindDragNode('monitor', 'monitor-title');
