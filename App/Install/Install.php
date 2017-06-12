@@ -49,16 +49,16 @@ class Install
 		foreach ($dirs as $key => $dir) {
 			$dirCheck[$key]['dir'] = $dir;
 			$path = ROOT_PATH.$dir;
+			// 不存在
+			if (!file_exists($path)) {
+				$dirCheck[$key]['rst'] = $lang['not_exists'];
+				$disabled = 'disabled';
 			// 可写
-			if (is_writable($path)) {
+			} elseif (is_writable($path)) {
 				$dirCheck[$key]['rst'] = $lang['can_write'];
 			// 不可写
-			} elseif (is_dir($path)) {
-				$dirCheck[$key]['rst'] = $lang['cannt_write'];
-				$disabled = 'disabled';
-			// 不存在
 			} else {
-				$dirCheck[$key]['rst'] = $lang['not_exists'];
+				$dirCheck[$key]['rst'] = $lang['cannt_write'];
 				$disabled = 'disabled';
 			}
 		}
@@ -134,17 +134,13 @@ class Install
 		// 获取数据库配置
 		$settings = config('db');
 		// 读取SQL
-		$sql = file_get_contents(module_path('data/structure.sql'));
-		$sql = strtr($sql, ["\r"=>'', '`ecs_'=>"`{$settings['prefix']}"]);
-		$items = explode(";\n", $sql);
-		// 连接数据库
+		$sql = str_replace('`ecs_', '`'.$settings['prefix'], file_get_contents(module_path('data/structure.sql')));
+		// 连接数据库并设置字符集
 		$db = new \mysqli($settings['host'], $settings['user'], $settings['pass'], $settings['name'], $settings['port']);
 		$db->set_charset('utf8');
 		// 执行SQL
-		foreach ($items as $item) {
-			if (!$db->query($item)) {
-				exit($db->error);
-			}
+		if (!$db->multi_query($sql)) {
+			exit($db->error);
 		}
 		// 响应
 		exit('ok');
