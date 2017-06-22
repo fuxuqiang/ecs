@@ -6,6 +6,7 @@ return [
 
 	// 数据库配置
 	'db' => [
+		'api'	 => 'PDO',
 		'host'	 => '[host]',
 		'port'   => '[port]',
 		'name'   => '[name]',
