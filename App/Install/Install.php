@@ -21,49 +21,60 @@ class Install
 	// 安装环境检测页
 	public function checking()
 	{
-		view('checking', ['lang' => lang_var('check', true)], true);
+		view('checking', ['lang' => lang_var('checking', true)], true);
 	}
 
 	// 输出检测结果
 	public function checked()
 	{
-		$disabled = '';
+		$data['disabled'] = '';
 		// 获取语言变量
-		$lang = lang_var('check', true);
+		$lang = lang_var('checked', true);
+		// 系统环境及PHP版本
+		$data['sys'][$lang['php_os']] = PHP_OS;
+		$data['sys'][$lang['php_ver']] = PHP_VERSION;
 		// 是否支持mysqli
 		if (extension_loaded('mysqli') && extension_loaded('mysqlnd')) {
-			$mysqli = $lang['support'];
+			$data['sys'][$lang['does_support_mysqli']] = $lang['support'];
 		} else {
-			$mysqli = $lang['not_support'];
-			$disabled = 'disabled';
+			$data['sys'][$lang['does_support_mysqli']] = $lang['not_support'];
+			$data['disabled'] = 'disabled';
+		}
+		// 是否支持pdo_mysql
+		if (extension_loaded('pdo_mysql')) {
+			$data['sys'][$lang['does_support_pdo_mysql']] = $lang['support'];
+		} else {
+			$data['sys'][$lang['does_support_pdo_mysql']] = $lang['not_support'];
+			$data['disabled'] = 'disabled';
 		}
 		// 获取GD的版本号
 		if (function_exists('gd_info')) {
-			$gd_ver = gd_info()['GD Version'];
+			$data['sys'][$lang['gd_version']] = gd_info()['GD Version'];
 		} else {
-			$gd_ver = $lang['not_support'];
-			$disabled = 'disabled';
+			$data['sys'][$lang['gd_version']] = $lang['not_support'];
+			$data['disabled'] = 'disabled';
 		}
 		// 检查目录权限
-		$dirs = ['config', 'config/config.php', 'temp/compile', 'temp/static_caches'];
-		foreach ($dirs as $key => $dir) {
-			$dirCheck[$key]['dir'] = $dir;
-			$path = ROOT_PATH.$dir;
+		$files = ['config', 'config/config.php', 'temp/compile', 'temp/static_caches'];
+		foreach ($files as $file) {
+			$path = ROOT_PATH.$file;
 			// 不存在
 			if (!file_exists($path)) {
-				$dirCheck[$key]['rst'] = $lang['not_exists'];
-				$disabled = 'disabled';
+				$data['file_check'][$file] = $lang['not_exists'];
+				$data['disabled'] = 'disabled';
 			// 可写
 			} elseif (is_writable($path)) {
-				$dirCheck[$key]['rst'] = $lang['can_write'];
+				$data['file_check'][$file] = $lang['can_write'];
 			// 不可写
 			} else {
-				$dirCheck[$key]['rst'] = $lang['cannt_write'];
-				$disabled = 'disabled';
+				$data['file_check'][$file] = $lang['cannt_write'];
+				$data['disabled'] = 'disabled';
 			}
 		}
+		// 语言变量
+		$data['lang'] = lang_var('checking', true);
 		// 显示视图
-		view('checked', compact('mysqli', 'gd_ver', 'dirCheck', 'lang', 'disabled'), true);
+		view('checked', $data, true);
 	}
 
 	// 配置页
@@ -116,7 +127,7 @@ class Install
 	{
 		$lang = lang_var('common');
 		$settings = config('db');
-		$db = @new \mysqli($settings['host'], $settings['user'], $settings['pass'], null, $port);
+		$db = @new \mysqli($settings['host'], $settings['user'], $settings['pass'], null, $settings['port']);
 		if ($db->connect_errno) {
 			exit($lang['connect_failed']);
 		} else {
