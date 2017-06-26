@@ -17,7 +17,7 @@ class Cache
 	 * @param string $cacheName
 	 * @param string $caches
 	 *
-	 * @return
+	 * @return void
 	 */
 	public function write($cacheName, $caches)
 	{

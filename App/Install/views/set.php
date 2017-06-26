@@ -62,12 +62,12 @@
               <table class="list">
                 <tr>
                   <td width="90">{{ $lang['admin_name'] }}</td>
-                  <td><input type="text" name="admin-name" required></td>
+                  <td><input type="text" name="admin-name"></td>
                 </tr>
                 <tr>
                   <td width="90">{{ $lang['admin_password'] }}</td>
                   <td>
-                    <input type="password" name="admin-pwd" required>
+                    <input type="password" name="admin-pwd">
                     <span id="admin-pwd-result"></span>
                   </td>
                 </tr>
