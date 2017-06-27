@@ -9,6 +9,7 @@ class Install
 	{
 		if (is_file(ROOT_PATH.'config/install.lock') && App::$dispatch['action'] != 'done') {
 			view('error', ['lang' => lang_var('error')], true);
+			exit;
 		}
 	}
 

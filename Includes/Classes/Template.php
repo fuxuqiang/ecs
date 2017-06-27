@@ -111,7 +111,7 @@ class Template
 	private function parseEcho($content)
 	{
 		return preg_replace_callback('~{{(.*?)}}~', function($matches){
-			return $this->parseVar("<?= $matches[1] ?>");
+			return $this->parseVar("<?=$matches[1]?>");
 		}, $content);
 	}
 
