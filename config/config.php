@@ -6,16 +6,15 @@ return [
 
 	// 数据库配置
 	'db' => [
-		'api'	 => 'PDO',
-		'host'	 => '[host]',
-		'port'   => '[port]',
-		'name'   => '[name]',
-		'user'   => '[user]',
-		'pass'   => '[pass]',
-		'prefix' => '[prefix]'
+		'api'	  => 'PDO',
+		'host'	  => '[host]',
+		'port'    => '[port]',
+		'name'    => '[name]',
+		'user'    => '[user]',
+		'pwd'     => '[pwd]',
+		'prefix'  => '[prefix]',
+		'charset' => 'utf8',
 	],
-
-	'charset'  => 'utf-8',
 
 	'timezone' => '[timezone]',
 
