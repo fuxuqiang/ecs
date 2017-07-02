@@ -2,7 +2,6 @@
 
 use Includes\App;
 use Includes\Config;
-use Includes\Classes\Mysql;
 
 /**
  * 获取配置
@@ -25,17 +24,26 @@ function config($name)
  *
  * @param string $name 
  *
- * @return \Includes\Classes\Mysql
+ * @return Db
  */
 function db($name = false)
 {
-    static $settings;
-    if ($settings === null) {
+    static $settings, $db;
+    if (!$settings) {
         $settings = config('db');
         $settings['debug'] = config('debug');
-        $settings['charset'] = config('charset');
     }
-    $db = Mysql::getInstance($settings);
+    if (!$db) {
+        switch ($settings['api']) {
+            case 'mysqli':
+                $db = new Includes\Classes\Db\MysqliDb($settings);
+                break;
+            case 'PDO':
+            default:
+                $db = new Includes\Classes\Db\PdoDb($settings);
+                break;
+        }
+    }
     if ($name) {
         $db->table($name);
     }

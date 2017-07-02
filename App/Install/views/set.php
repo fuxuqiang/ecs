@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                   <td width="90">{{ $lang['db_pass'] }}</td>
-                  <td><input type="password" name="db-pass" /></td>
+                  <td><input type="password" name="db-pwd" /></td>
                 </tr>
                 <tr>
                   <td width="90">{{ $lang['db_name'] }}</td>
@@ -246,7 +246,7 @@
       host: form['db-host'].value, 
       port: form['db-port'].value,
       user: form['db-user'].value,
-      pass: form['db-pass'].value
+      pwd: form['db-pwd'].value
     }, function(msg){
       if (msg.status) {
         fn(msg.content);
@@ -298,7 +298,7 @@
       host: form['db-host'].value, 
       port: form['db-port'].value,
       user: form['db-user'].value,
-      pass: form['db-pass'].value,
+      pwd: form['db-pwd'].value,
       name: dbName.value,
       prefix: form['db-prefix'].value,
       timezone: form['timezone'].value
@@ -325,7 +325,7 @@
     notice.innerHTML += "{{ $lang['create_admin_passport'] }}";
     Ajax.get('/install/createAdminPassport', {
       name: form['admin-name'].value,
-      pass: form['admin-pwd'].value,
+      pwd: form['admin-pwd'].value,
       email: form['admin-email'].value
     }, function(msg){
       handleMsg(msg, doOthers);

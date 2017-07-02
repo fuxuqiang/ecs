@@ -14,6 +14,12 @@ class App
 	 */
 	public static function start()
 	{
+		// 载入函数库文件
+		require ROOT_PATH.'Includes/functions.php';
+		// 是否开启调试模式
+		if (!config('debug')) {
+			error_reporting(0);
+		}
 		// 解析URL
 		if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO']!='/') {
 			$pathInfo = trim($_SERVER['PATH_INFO'], '/');

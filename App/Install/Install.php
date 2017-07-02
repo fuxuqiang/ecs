@@ -85,9 +85,9 @@ class Install
 	}
 
 	// 查询数据库列表
-	public function getDbList($host, $port, $user, $pass)
+	public function getDbList($host, $port, $user, $pwd)
 	{
-		$db = new \mysqli($host, $user, $pass, null, $port);
+		$db = new \mysqli($host, $user, $pwd, null, $port);
 		if ($db->connect_errno) {
 			exit(json_encode(['status'=>false, 'content'=>lang_var('common')['query_failed']]));
 		} else {
@@ -100,7 +100,7 @@ class Install
 	}
 
 	// 创建配置文件
-	public function createConfFile($host, $port, $user, $pass, $name, $prefix, $timezone)
+	public function createConfFile($host, $port, $user, $pwd, $name, $prefix, $timezone)
 	{
 		// 获取配置文件内容
 		$content = file_get_contents(ROOT_PATH.'config/config.php');
@@ -109,7 +109,7 @@ class Install
 			'[host]' => $host, 
 			'[port]' => $port, 
 			'[user]' => $user, 
-			'[pass]' => $pass, 
+			'[pwd]' => $pwd, 
 			'[name]' => $name, 
 			'[prefix]' => $prefix, 
 			'[timezone]' => $timezone
@@ -128,7 +128,7 @@ class Install
 	{
 		$lang = lang_var('common');
 		$settings = config('db');
-		$db = @new \mysqli($settings['host'], $settings['user'], $settings['pass'], null, $settings['port']);
+		$db = new \mysqli($settings['host'], $settings['user'], $settings['pwd'], null, $settings['port']);
 		if ($db->connect_errno) {
 			exit($lang['connect_failed']);
 		} else {
@@ -148,7 +148,7 @@ class Install
 		// 读取SQL
 		$sql = str_replace('`ecs_', '`'.$settings['prefix'], file_get_contents(module_path('data/structure.sql')));
 		// 连接数据库并设置字符集
-		$db = new \mysqli($settings['host'], $settings['user'], $settings['pass'], $settings['name'], $settings['port']);
+		$db = new \mysqli($settings['host'], $settings['user'], $settings['pwd'], $settings['name'], $settings['port']);
 		$db->set_charset('utf8');
 		// 执行SQL
 		if (!$db->multi_query($sql)) {
@@ -159,17 +159,17 @@ class Install
 	}
 
 	// 创建管理员账户
-	public function createAdminPassport($name, $pass, $email)
+	public function createAdminPassport($name, $pwd, $email)
 	{
-		if ($pass === '') {
+		if ($pwd === '') {
 			exit(lang_var('common')['password_empty_error']);
 		}
-		$rst = db('admin_user')->insert([
+		$rst = db('admin_user')->exec([
 			'user_name' => $name,
 			'email' => $email,
-			'password' => md5($pass),
+			'password' => md5($pwd),
 			'add_time' => time()
-		]);
+		], 'INSERT');
 		if ($rst) {
 			exit('ok');
 		}
@@ -179,10 +179,10 @@ class Install
 	public function doOthers($lang)
 	{
 		// 写入语言配置
-		$rst = db('shop_config')->insert([
+		$rst = db('shop_config')->exec([
 			'code' => 'lang',
 			'value' => $lang
-		]);
+		], 'INSERT');
 		// 写入安装锁定文件
 		$handle = fopen(ROOT_PATH.'config/install.lock', 'w');
 		// 响应
