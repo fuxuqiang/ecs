@@ -9,7 +9,10 @@ class PdoDb extends Db
 {
     public function execute($sql, array $data = [])
     {
-        return $this->prepare($sql)->execute($data);
+        if (!$stmt = $this->prepare($sql)) {
+            return $this->error($this->linkID->errorInfo());
+        }
+        return $stmt->execute(array_values($data));
     }
 
     protected function connect()

@@ -9,12 +9,21 @@ class MysqliDb extends Db
 {
     public function execute($sql, array $data = [])
     {
-        return $this->getStatement($sql, $data)->execute();
+        if ($stmt = $this->bindParam($sql, $data)) {
+            return $stmt->execute();
+        } else {
+            return false;
+        }
+    }
+
+    public function query($sql, array $data = [])
+    {
+        
     }
 
     protected function connect()
     {
-        $linkID = new \mysqli(
+        $linkID = @new \mysqli(
             $this->settings['host'], 
             $this->settings['user'], 
             $this->settings['pwd'], 
@@ -32,17 +41,10 @@ class MysqliDb extends Db
         return $linkID;
     }
 
-    protected function getStatement($sql, $data)
+    protected function bindParam($sql, $data)
     {
         if (!$stmt = $this->prepare($sql)) {
-            return false;
-        }
-        if ($this->linkID->error) {
-            if ($this->settings['debug']) {
-                trigger_error($this->linkID->error, E_USER_ERROR);
-            } else {
-                return false;
-            }
+            return $this->error($this->linkID->error);
         }
         if ($data) {
             $types = '';

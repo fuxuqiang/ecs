@@ -35,7 +35,6 @@ abstract class Db
      *
      * @param array $data
      * @param string $mode
-     *
      * @return string
      */
     public function exec(array $data, $mode)
@@ -66,6 +65,21 @@ abstract class Db
             }  
         }
         return $this->linkID->prepare($sql);
+    }
+
+    /**
+     * 错误处理
+     *
+     * @param string $msg
+     * @return mixed
+     */
+    protected function error($msg)
+    {
+        if ($this->settings['debug']) {
+            trigger_error($msg, E_USER_ERROR);
+        } else {
+            return false;
+        }
     }
 
     /**
