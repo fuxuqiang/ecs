@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>{$lang.cp_home} - {$lang.system_message}</title>
+  <title>{{$lang['cp_home']}} - {{$lang['system_message']}}</title>
   <link rel="stylesheet" type="text/css" href="/css/common.css">
   <link rel="stylesheet" type="text/css" href="/css/admin/general.css">
   <link rel="stylesheet" type="text/css" href="/css/admin/message.css">
@@ -9,10 +9,10 @@
 <body>
 <h1>
   <span>
-    <a href="">{$lang.cp_home}</a>
+    <a href="">{{$lang['cp_home']}}</a>
   </span>
   <span>
-    &nbsp;&nbsp;&nbsp;&nbsp;{$lang.system_message}
+    &nbsp;&nbsp;&nbsp;&nbsp;{{$lang['system_message']}}
   </span>
   <div style="clear:both"></div>
 </h1>
@@ -29,19 +29,19 @@
           <img src="/img/admin/confirm.gif" width="32" height="32" border="0" alt="confirm" />
           @endif
         </td>
-        <td style="font-size: 14px; font-weight: bold;">{$msg}</td>
+        <td style="font-size: 14px; font-weight: bold;">{{$msg}}</td>
       </tr>
       <tr>
         <td></td>
         <td id="redirectionMsg">
-          {$lang.auto_redirection}
+          {{$lang['auto_redirection']}}
         </td>
       </tr>
       <tr>
         <td></td>
         <td>
           <ul>
-            <li><a href="javascript:history.back()">{$lang.go_back}</a></li>
+            <li><a href="javascript:history.back()">{{$lang['go_back']}}</a></li>
           </ul>
         </td>
       </tr>
@@ -59,7 +59,7 @@ window.setInterval(function(){
 }, 1000);
 </script>
 <div id="footer">
-{$query_info}{$memory_info}<br>
+{{$query_info}}{{$memory_info}}<br>
 </div>
 </body>
 </html>

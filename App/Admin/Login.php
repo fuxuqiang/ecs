@@ -24,8 +24,10 @@ class Login extends Init
 					sys_msg($lang['captcha_error'], 1);
 				}
 			}
-			if (md5($_POST['password']) == db('admin_user')->where(['user_name' => $_POST['username']])->find('password')) {
+			if (md5($_POST['password']) == db('admin_user')->where(['user_name' => $_POST['username']])->select('password')) {
 				die('success');
+			} else {
+				sys_msg($lang['login_failed'], 1);
 			}
 		}
 	}

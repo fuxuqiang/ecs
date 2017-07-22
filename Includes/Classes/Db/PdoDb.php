@@ -12,7 +12,8 @@ class PdoDb extends Db
         if (!$stmt = $this->prepare($sql)) {
             return $this->error($this->linkID->errorInfo());
         }
-        $stmt->execute(array_values($data));
+        $stmt->execute($data);
+        $this->queryCount++;
         if ($returnResult) {
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         } else {

@@ -11,9 +11,22 @@ abstract class Db
      * @var array $settings 数据库连接配置
      * @var object $linkID 数据库连接实例
      * @var string $table 表名
+     * @var array $data 要绑定的数据
      */ 
-    protected $settings, $linkID, $table;
+    protected $settings, $linkID, $table, $data;
     
+    /**
+     * @var array $sql SQL组成
+     */
+    protected $sql = [
+        'where' => ''
+    ];
+
+    /**
+     * @var int $queryCount 查询次数
+     */
+    public $queryCount = 0;
+
     /**
      * 设置数据库连接配置
      *
@@ -24,7 +37,12 @@ abstract class Db
         $this->settings = $settings;
     }
 
-    // 设置表名
+    /**
+     * 设置表名
+     *
+     * @param string $name
+     * @return void
+     */
     public function table($name)
     {
         $this->table = '`'.$this->settings['prefix'].$name.'`';
@@ -35,7 +53,7 @@ abstract class Db
      *
      * @param array $data
      * @param string $mode
-     * @return string
+     * @return bool
      */
     public function exec(array $data, $mode)
     {
@@ -43,14 +61,14 @@ abstract class Db
         foreach ($data as $col => $value) {
             $sql .= '`'.$col.'`=?,';
         }
-        return $this->query(rtrim($sql, ','), $data, false);
+        return $this->query(rtrim($sql, ','), array_values($data), false);
     }
 
     /**
      * 查询指定字段
      *
      * @param mixed $field
-     * @return array
+     * @return mixed
      */
     public function select($field = false)
     {
@@ -63,14 +81,39 @@ abstract class Db
         } else {
             $expr = '*';
         }
-        return $this->query('SELECT '.$expr.' FROM '.$this->table);
+        $sql = 'SELECT '.$expr.' FROM '.$this->table.$this->sql['where'];
+        $result = $this->query($sql, $this->data);
+        if (count($result) == 1) {
+            if (count($result[0]) == 1) {
+                return $result[0][$field];
+            } else {
+                return $result[0];
+            }
+        } else {
+            return $result;
+        }
+    }
+
+    /**
+     * 设置WHERE条件
+     *
+     * @param array $where
+     * @return static
+     */
+    public function where($where)
+    {
+        foreach ($where as $col => $value) {
+            $this->sql['where'] = ' WHERE `'.$col.'`=?';
+        }
+        $this->data = array_values($where);
+        return $this;
     }
 
     /**
      * 预处理
      *
      * @param string $sql
-     * @return object
+     * @return mysqli_stmt|PDOStatement
      */
     protected function prepare($sql)
     {

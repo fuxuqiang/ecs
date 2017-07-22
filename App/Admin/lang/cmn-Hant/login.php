@@ -11,4 +11,5 @@ return [
 	'back_home' => '返回首頁',
 	'click_for_another' => '看不清？點擊更換另一個驗證碼。',
 	'captcha_error' => '您輸入的驗證碼不正確。',
+	'login_failed' => '您輸入的帳號信息不正確。',
 ];

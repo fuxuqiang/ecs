@@ -67,6 +67,7 @@ class Template
 				file_put_contents($view, $content);
 				require $view;
 			}
+			exit;
 		}
 	}
 

@@ -11,4 +11,5 @@ return [
 	'back_home' => '去店铺首页>>',
 	'click_for_another' => '看不清？点击更换另一个验证码。',
 	'captcha_error' => '您输入的验证码不正确。',
+	'login_failed' => '您输入的帐号信息不正确。',
 ];

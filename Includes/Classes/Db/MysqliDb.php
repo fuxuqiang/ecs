@@ -22,6 +22,7 @@ class MysqliDb extends Db
             call_user_func_array([$stmt, 'bind_param'], $vars);
         }
         $stmt->execute();
+        $this->queryCount++;
         if ($returnResult) {
             return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         } else {

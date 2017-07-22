@@ -49,7 +49,7 @@ class Captcha
 	public static function check($captcha)
 	{
 		session_start();
-		if ($captcha == $_SESSION['captcha']) {
+		if (isset($_SESSION['captcha']) && $captcha == $_SESSION['captcha']) {
 			return true;
 		}
 		return false;
