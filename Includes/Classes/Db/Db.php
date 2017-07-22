@@ -43,7 +43,27 @@ abstract class Db
         foreach ($data as $col => $value) {
             $sql .= '`'.$col.'`=?,';
         }
-        return $this->execute(rtrim($sql, ','), $data);
+        return $this->query(rtrim($sql, ','), $data, false);
+    }
+
+    /**
+     * 查询指定字段
+     *
+     * @param mixed $field
+     * @return array
+     */
+    public function select($field = false)
+    {
+        if (is_array($field)) {
+            $expr = array_map(function($v){
+                return '`'.$v.'`';
+            }, $field);
+        } elseif (is_string($field)) {
+            $expr = '`'.$field.'`';
+        } else {
+            $expr = '*';
+        }
+        return $this->query('SELECT '.$expr.' FROM '.$this->table);
     }
 
     /**
@@ -83,18 +103,19 @@ abstract class Db
     }
 
     /**
+     * 执行查询
+     *
+     * @param string $sql
+     * @param array $data
+     * @param bool $returnResult
+     * @return mixed
+     */
+    abstract public function query($sql, array $data, $returnResult);
+
+    /**
      * 连接数据库
      *
      * @return void
      */
     abstract protected function connect();
-
-    /**
-     * 执行查询
-     *
-     * @param string $sql
-     * @param array $data
-     * @return mixed
-     */
-    abstract public function execute($sql, array $data);
 }

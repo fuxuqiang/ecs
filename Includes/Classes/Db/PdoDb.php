@@ -7,12 +7,17 @@ namespace Includes\Classes\Db;
  */
 class PdoDb extends Db
 {
-    public function execute($sql, array $data = [])
+    public function query($sql, array $data = [], $returnResult = true)
     {
         if (!$stmt = $this->prepare($sql)) {
             return $this->error($this->linkID->errorInfo());
         }
-        return $stmt->execute(array_values($data));
+        $stmt->execute(array_values($data));
+        if ($returnResult) {
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } else {
+            return true;
+        }
     }
 
     protected function connect()

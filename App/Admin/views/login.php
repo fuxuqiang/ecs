@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>{$lang.cp_home}</title>
+  <title>{{$lang['cp_home']}}</title>
   <link rel="stylesheet" type="text/css" href="/css/admin/general.css">
   <link rel="stylesheet" type="text/css" href="/css/admin/login.css">
   <script type="text/javascript" src="/js/utility.js"></script>
@@ -22,7 +22,7 @@
               </g>
             </g>
           </svg>
-          <input type="text" name="username" placeholder="{$lang.label_username}" required>
+          <input type="text" name="username" placeholder="{{$lang['label_username']}}" required>
         </div>
         <div class="controls two">
           <svg class="iconphone" width="20px" height="20px" viewBox="0 0 20 20">
@@ -32,9 +32,9 @@
               </g>
             </g>
           </svg>
-          <input type="password" name="password" placeholder="{$lang.label_password}"/>
+          <input type="password" name="password" placeholder="{{$lang['label_password']}}"/>
         </div>
-        <?php if ($gd_ver > 0): ?>
+        @if($gd_ver > 0)
         <div class="controls third">
           <svg class="iconphone" width="20px" height="20px" viewBox="0 0 20 20">
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
@@ -43,22 +43,22 @@
               </g>
             </g>
           </svg>
-          <input type="text" name="no-captcha" class="capital" placeholder="{$lang.label_captcha}" />
+          <input type="text" name="no-captcha" class="capital" placeholder="{{$lang['label_captcha']}}" />
           <!-- <input name="captchas" type="text" data-error-msg="验证码不能为空" class="Inp-v" placeholder="输入验证码"><i class="Ico"></i> -->
           <div class="" style="position: absolute; right: 8px; top: 8px;" id="number_div">
-            <img src="/common/verify" width="102" height="34" alt="CAPTCHA" border="1" onclick="this.src='/common/verify?'+Math.random()" style="cursor: pointer;" title="{$lang.click_for_another}" />
+            <img src="/common/verify" width="102" height="34" alt="CAPTCHA" border="1" onclick="this.src='/common/verify?'+Math.random()" style="cursor: pointer;" title="{{$lang['click_for_another']}}" />
           </div>
         </div>
-        <?php endif; ?>
+        @endif
         <div class="controls last">
-          <input type="submit" class="btn-a" value="{$lang.signin_now}" class="button" />
+          <input type="submit" class="btn-a" value="{{$lang['signin_now']}}" class="button" />
           <span style="display: none" id="login_error_msg"></span>
         </div>
         <div class="controls bside" style="border: none">
           <input type="checkbox" value="1" name="remember" id="remember" />
-          <label for="remember">{$lang.remember}</label></td>
-          <a class="link-forget cl-link-blue" href="get_password.php?act=forget_pwd">{$lang.forget_pwd}</a>
-          <a class="link-home cl-link-blue" href="../">{$lang.back_home}</a>
+          <label for="remember">{{$lang['remember']}}</label></td>
+          <a class="link-forget cl-link-blue" href="get_password.php?act=forget_pwd">{{$lang['forget_pwd']}}</a>
+          <a class="link-home cl-link-blue" href="../">{{$lang['back_home']}}</a>
         </div>
       </div>
     </div>

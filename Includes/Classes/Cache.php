@@ -4,11 +4,11 @@ namespace Includes\Classes;
 
 class Cache
 {
-	private $_cachePath;
+	private $cachePath;
 
 	public function __construct($cachePath)
 	{
-		$this->_cachePath = rtrim($cachePath, '/').'/';
+		$this->cachePath = rtrim($cachePath, '/').'/';
 	}
 
 	/**
@@ -21,7 +21,7 @@ class Cache
 	 */
 	public function write($cacheName, $caches)
 	{
-	    $cacheFile = $this->_cachePath . $cacheName.'.php';
+	    $cacheFile = $this->cachePath . $cacheName.'.php';
 	    $content = "<?php\r\n";
 	    $content .= "return ".var_export($caches, true).';';
 	    file_put_contents($cacheFile, $content, LOCK_EX);
@@ -40,7 +40,7 @@ class Cache
 	    if (!empty($result[$cacheName])) {
 	        return $result[$cacheName];
 	    }
-	    $cacheFile = $this->_cachePath . $cacheName.'.php';
+	    $cacheFile = $this->cachePath . $cacheName.'.php';
 	    if (file_exists($cacheFile)) {
 	        $result[$cacheName] = require $cacheFile;
 	        return $result[$cacheName];
