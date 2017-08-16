@@ -2,6 +2,8 @@
 
 use Includes\App;
 use Includes\Config;
+use Includes\Classes\Db\MysqliDb;
+use Includes\Classes\Db\PdoDb;
 
 /**
  * 获取配置
@@ -36,11 +38,11 @@ function db($name = false)
     if (!$db) {
         switch ($settings['api']) {
             case 'mysqli':
-                $db = new Includes\Classes\Db\MysqliDb($settings);
+                $db = new MysqliDb($settings);
                 break;
             case 'PDO':
             default:
-                $db = new Includes\Classes\Db\PdoDb($settings);
+                $db = new PdoDb($settings);
                 break;
         }
     }
